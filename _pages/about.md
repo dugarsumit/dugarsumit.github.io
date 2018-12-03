@@ -22,19 +22,23 @@ redirect_from:
 # ![alt text][office-icon] Professional Experience
 ## Software Engineer for Machine Learning @ _Kaia health software GmbH_
 ###### ![alt text][check-icon] Work Student	| ![alt text][calendar-icon] March 2018 -- Present | ![alt text][location-icon] Munich, Germany
- -	Working on a technique to watermark deep learning models.
- -	Streamlined pose estimation training pipeline using PyTorch Ignite. Created a framework for hyperparameter tuning and automatic conversion of trained models to coreml format.
- -	Set up AWS infrastructure of Kaia for HIPAA compliance in US.
-
----
+-	Working on a technique to watermark deep learning models.
+-	Streamlined pose estimation training pipeline using PyTorch Ignite. Created a framework for hyperparameter tuning and automatic conversion of trained models to coreml format.
+-	Set up AWS infrastructure of Kaia for HIPAA compliance in US.
 
 ##	Backend Software Engineer @ _SimScale GmbH_
 ######	![alt text][check-icon] Work Student | ![alt text][calendar-icon] June 2017 -- Jan 2018 | ![alt text][location-icon] Munich, Germany
- -	Developed web service APIs in Java, Python and Golang.
- -	Automated build and deployment pipelines using Jenkins and Ansible.
+-	Developed web service APIs in Java, Python and Golang.
+-	Automated build and deployment pipelines using Jenkins and Ansible.
 
- ---
+##	Software Engineer @ _Lybrate_
+######	![alt text][check-icon] Full Time | ![alt text][calendar-icon] Nov 2015 -- Aug 2016 | ![alt text][location-icon] New Delhi, India
+-	Primary responsibilities included backend development of web based applications using Java Spring, Hibernate, MySQL, MongoDB, Apache Solr.
+-	Drastically increased user engagement by implementing a personalized facebook like feed of health tips and QnAs. The algorithm utilized user's affinity for different health topics based on his/her past activities on the website.
 
+##	Software Engineer @ _Snapdeal_
+######	![alt text][check-icon] Full Time | ![alt text][calendar-icon] June 2013 -- Nov 2015 | ![alt text][location-icon] New Delhi, India
+-	Primary responsibilities included backend development of web based applications, monitoring and scaling of website's performance.
 
 # ![alt text][project-icon] Ongoing Projects
 # ![alt text][project-icon] Past Projects
