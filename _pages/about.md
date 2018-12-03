@@ -1,6 +1,6 @@
 ---
 permalink: /
-title: "Machine Learning Enthusiast | Software Engineer"
+title: "About me"
 excerpt: "About me"
 author_profile: true
 redirect_from: 
@@ -19,6 +19,8 @@ redirect_from:
 [check-icon]: https://dugarsumit.github.io/images/check-icon16x16.png
 [download-icon]: https://dugarsumit.github.io/images/download-icon16x16.png
 [volunteer-icon]: https://dugarsumit.github.io/images/volunteer-icon16x16.png
+
+#	Machine Learning Enthusiast and Software Engineer
 
 # ![alt text][office-icon] Professional Experience
 ## Software Engineer for Machine Learning @ _Kaia health software GmbH_
