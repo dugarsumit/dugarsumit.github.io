@@ -21,7 +21,7 @@ redirect_from:
 ***
 ## Software Engineer for Machine Learning
 ### Work Student @ Kaia health software GmbH
-###### ![alt text][calendar-icon] March 2018 -- Present	![alt text][location-icon] Munich, Germany
+###### ![alt text][calendar-icon] March 2018 -- Present       ![alt text][location-icon] Munich, Germany
 
 ---
 
