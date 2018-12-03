@@ -18,6 +18,7 @@ redirect_from:
 [skills-icon]: https://dugarsumit.github.io/images/skills-icon16x16.png
 [check-icon]: https://dugarsumit.github.io/images/check-icon16x16.png
 [download-icon]: https://dugarsumit.github.io/images/download-icon16x16.png
+[volunteer-icon]: https://dugarsumit.github.io/images/volunteer-icon16x16.png
 
 # ![alt text][office-icon] Professional Experience
 ## Software Engineer for Machine Learning @ _Kaia health software GmbH_
@@ -87,5 +88,15 @@ Implemented a spam filter using Naive Bayes Classifier.
 ##	Bachelor of Technology in Software Engineering
 ######	![alt text][university-icon] Delhi Technological University | ![alt text][calendar-icon] Aug 2009 -- May 2013 | ![alt text][tick-icon] Grade: 75.9%, First Class Distinction
 
-# ![alt text][skills-icon] Skills
+# ![alt text][volunteer-icon] Voluntary Work
+## Support Staff @ _Peepal Farm_
+###### ![alt text][volunteer-icon] Volunteer | ![alt text][calendar-icon] Jan 2016 -- Feb 2016 | ![alt text][location-icon] New Delhi, India
+-	Helped the team with technical and hands on work in supporting the cause of helping stray animals.
 
+## Designer @ _IEEE_
+###### ![alt text][volunteer-icon] Student Volunteer | ![alt text][calendar-icon] March 2010 -- March 2011 | ![alt text][location-icon] New Delhi, India
+-	Volunteered as a designer in Troika’11 (annual technical fest of DTU).
+
+## Designer @ _thewittyshit.com_
+###### ![alt text][volunteer-icon] Student Volunteer | ![alt text][calendar-icon] Jan 2010 -- Jan 2010 | ![alt text][location-icon] New Delhi, India
+-	Did some creative designing of T-shirts.
