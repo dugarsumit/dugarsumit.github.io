@@ -87,6 +87,7 @@ Implemented a spam filter using Naive Bayes Classifier.
 
 ##	Bachelor of Technology in Software Engineering
 ######	![alt text][university-icon] Delhi Technological University | ![alt text][calendar-icon] Aug 2009 -- May 2013 | ![alt text][tick-icon] Grade: 75.9%, First Class Distinction
+**Relevant Courses** -- Obejct Oriented Programming, Operating Systems, Databases, Engineering Mathematics.
 
 # ![alt text][volunteer-icon] Voluntary Work
 ## Support Staff @ _Peepal Farm_
