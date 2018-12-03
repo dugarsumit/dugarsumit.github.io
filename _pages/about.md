@@ -14,6 +14,13 @@ redirect_from:
 [office-icon]: https://dugarsumit.github.io/images/office-icon16x16.png
 [time-left-icon]: https://dugarsumit.github.io/images/time-left-icon16x16.png
 [university-icon]: https://dugarsumit.github.io/images/university-icon16x16.png
+[project-icon]: https://dugarsumit.github.io/images/project-icon16x16.png
+[skills-icon]: https://dugarsumit.github.io/images/skills-icon16x16.png
 
 # ![alt text][office-icon] Professional Experience
+# ![alt text][project-icon] Ongoing Projects
+# ![alt text][project-icon] Past Projects
+# ![alt text][project-icon] Undergraduate Projects
+# ![alt text][university-icon] Education
+# ![alt text][skills-icon] Skills
 
