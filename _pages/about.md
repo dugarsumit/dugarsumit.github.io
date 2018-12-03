@@ -20,9 +20,9 @@ redirect_from:
 [download-icon]: https://dugarsumit.github.io/images/download-icon16x16.png
 
 # ![alt text][office-icon] Professional Experience
-## Software Engineer for Machine Learning at __Kaia__ __health__ __software__ __GmbH__
+## Software Engineer for Machine Learning at _Kaia health software GmbH_
 ###### ![alt text][check-icon] Work Student	| ![alt text][calendar-icon] March 2018 -- Present | ![alt text][location-icon] Munich, Germany
- -	__Working__ on a technique to watermark deep learning models.
+ -	_Working_ on a technique to watermark deep learning models.
  -	Streamlined pose estimation training pipeline using PyTorch Ignite. Created a framework for hyperparameter tuning and automatic conversion of trained models to coreml format.
  -	Set up AWS infrastructure of Kaia for HIPAA compliance in US.
 
