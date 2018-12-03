@@ -7,4 +7,10 @@ redirect_from:
   - /about/
   - /about.html
 ---
-This is my homepage :)
+
+[calender-icon]: https://dugarsumit.github.io/images/calender-icon.png
+[tick-icon]: https://dugarsumit.github.io/images/tick-icon.png
+[location-icon]: https://dugarsumit.github.io/images/location-icon.png
+
+#Professional Experience ![alt text][calender-icon]
+
