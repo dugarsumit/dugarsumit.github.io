@@ -8,9 +8,9 @@ redirect_from:
   - /about.html
 ---
 
-[calender-icon]: https://dugarsumit.github.io/images/calender-icon.png
+[calendar-icon]: https://dugarsumit.github.io/images/calendar-icon.png
 [tick-icon]: https://dugarsumit.github.io/images/tick-icon.png
 [location-icon]: https://dugarsumit.github.io/images/location-icon.png
 
-#Professional Experience ![alt text][calender-icon]
+#Professional Experience ![alt text][calendar-icon]
 
