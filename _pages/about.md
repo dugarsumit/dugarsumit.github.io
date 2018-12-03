@@ -48,7 +48,8 @@ redirect_from:
 ######	![alt text][check-icon] Technical University of Munich | ![alt text][calendar-icon] Oct 2016 -- Present | ![alt text][tick-icon] Grade: 1.7 [Best-1.0, Worst-5.0]
 **Relevant Courses**
 ```
-Machine Learning, Deep Learning in Computer Vision, 3D Scanning and Motion Capture, Variational Methods, Medical Augmented Reality, Cloud Computing.
+Machine Learning, Deep Learning in Computer Vision, 3D Scanning and Motion Capture,
+Variational Methods, Medical Augmented Reality, Cloud Computing.
 ```
 # ![alt text][skills-icon] Skills
 
