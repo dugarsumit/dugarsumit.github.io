@@ -9,8 +9,10 @@ redirect_from:
 ---
 
 [calendar-icon]: https://dugarsumit.github.io/images/calendar-icon16x16.png
-[tick-icon]: https://dugarsumit.github.io/images/tick-icon.png
-[location-icon]: https://dugarsumit.github.io/images/location-icon.png
+[tick-icon]: https://dugarsumit.github.io/images/tick-icon16x16.png
+[location-icon]: https://dugarsumit.github.io/images/location-icon16x16.png
+[office-icon]: https://dugarsumit.github.io/images/office-icon16x16.png
+[time-left-icon]: https://dugarsumit.github.io/images/time-left-icon16x16.png
 
-#Professional Experience ![alt text][calendar-icon]
+# ![alt text][office-icon] Professional Experience
 
