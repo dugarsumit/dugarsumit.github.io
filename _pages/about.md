@@ -27,13 +27,14 @@ redirect_from:
  -	Set up AWS infrastructure of Kaia for HIPAA compliance in US.
 
  ---
+ 
  ## Backend Software Engineer @ _SimScale GmbH_
  ###### ![alt text][check-icon] Work Student	| ![alt text][calendar-icon] June 2017 -- Jan 2018 | ![alt text][location-icon] Munich, Germany
  -	Developed web service APIs in Java, Python and Golang.
  -	Automated build and deployment pipelines using Jenkins and Ansible.
 
  ---
- 
+
 
 # ![alt text][project-icon] Ongoing Projects
 # ![alt text][project-icon] Past Projects
