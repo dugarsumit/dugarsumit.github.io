@@ -41,6 +41,9 @@ redirect_from:
 -	Primary responsibilities included backend development of web based applications, monitoring and scaling of website's performance.
 
 # ![alt text][project-icon] Ongoing Projects
+##	Aspect Based Sentiment Analysis (ABSA)
+######	![alt text][check-icon] Master Thesis | ![alt text][calendar-icon] Sept 2018 -- Present
+A novel approach to jointly detect aspect and the corresponding sentiment in a given sentence using DNN and transfer learning.
 
 # ![alt text][project-icon] Graduate Projects
 
@@ -50,6 +53,9 @@ redirect_from:
 ##	Master of Science in Informatics
 ######	![alt text][check-icon] Technical University of Munich | ![alt text][calendar-icon] Oct 2016 -- Present | ![alt text][tick-icon] Grade: 1.7 [Best-1.0, Worst-5.0]
 **Relevant Courses** -- Machine Learning, Deep Learning in Computer Vision, 3D Scanning and Motion Capture, Variational Methods, Medical Augmented Reality, Cloud Computing.
+
+#	Bachelor of Technology in Software Engineering
+######	![alt text][check-icon] Delhi Technological University | ![alt text][calendar-icon] Aug 2009 -- May 2013 | ![alt text][tick-icon] Grade: 75.9%, First Class Distinction
 
 # ![alt text][skills-icon] Skills
 
