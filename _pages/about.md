@@ -8,7 +8,7 @@ redirect_from:
   - /about.html
 ---
 
-[calendar-icon]: https://dugarsumit.github.io/images/calendar-icon.png
+[calendar-icon]: https://dugarsumit.github.io/images/calendar-icon16x16.png
 [tick-icon]: https://dugarsumit.github.io/images/tick-icon.png
 [location-icon]: https://dugarsumit.github.io/images/location-icon.png
 
