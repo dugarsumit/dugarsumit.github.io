@@ -13,6 +13,7 @@ redirect_from:
 [location-icon]: https://dugarsumit.github.io/images/location-icon16x16.png
 [office-icon]: https://dugarsumit.github.io/images/office-icon16x16.png
 [time-left-icon]: https://dugarsumit.github.io/images/time-left-icon16x16.png
+[university-icon]: https://dugarsumit.github.io/images/university-icon16x16.png
 
 # ![alt text][office-icon] Professional Experience
 
