@@ -4,7 +4,7 @@ collection: projects
 permalink: /projects/2017-06-01-makehuman-blender
 type: "Interdisciplinary Project"
 venue: "Technical University of Munich"
-date: 01-06-2017
+date: 01-12-2017
 location: "Munich, Germany"
 ---
 
