@@ -24,5 +24,5 @@ both the point clouds we then, compute the transformation between CT data point 
 estimate of the transformation. For this, we use a correspondence matching strategy. Then we refine this estimated transformation using ICP in order to obtain the final transformation.
 
 
-[For more details read section 3.2 of this report](https://dugarsumit.github.io/files/idp-report.pdf)  
+[For more details read this report](https://dugarsumit.github.io/files/idp-report.pdf)  
 [Source Code](https://gitlab.lrz.de/ga87yiq/mart/tree/master/registration) - Please email if you need access to the repository.
