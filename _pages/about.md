@@ -20,7 +20,7 @@ redirect_from:
 [download-icon]: https://dugarsumit.github.io/images/download-icon16x16.png
 [volunteer-icon]: https://dugarsumit.github.io/images/volunteer-icon16x16.png
 
-#	Machine Learning Enthusiast and Software Engineer
+Hello! I am a Master's student at Technical University of Munich. I am studying Informatics with major focus on Machine Learning and Natural Language Processing. 
 
 # ![alt text][office-icon] Professional Experience
 ## Software Engineer for Machine Learning @ _Kaia health software GmbH_
