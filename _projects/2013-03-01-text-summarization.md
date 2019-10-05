@@ -49,7 +49,7 @@ their smaller counterparts, which might not necessarily be of lesser importance.
 length" the above drawback can be nullified to a large extent, and a final sentence score is
 obtained.
 
-Sort the sentences in decending order based on their final scores and select top x number of sentences. The final list of sentences is the summary of the given text.
+Sort the sentences in descending order based on their final scores and select top x number of sentences. The final list of sentences is the summary of the given text.
 
 [More information here](https://dugarsumit.github.io/files/ATS-btech-final-proj-report.pdf)  
 [Source Code](https://github.com/dugarsumit/text_summarizer)
