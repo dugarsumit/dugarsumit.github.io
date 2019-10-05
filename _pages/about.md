@@ -20,11 +20,17 @@ redirect_from:
 [download-icon]: https://dugarsumit.github.io/images/download-icon16x16.png
 [volunteer-icon]: https://dugarsumit.github.io/images/volunteer-icon16x16.png
 
-Hello! I am a Master's student at Technical University of Munich. I am studying Informatics with major focus on Machine Learning and Natural Language Processing. 
+Hello! I am a Data Scientist currently working at e-bot7 GmbH. I studied Informatics from Technical University of Munich with major focus on Machine Learning and Natural Language Processing. 
 
 # ![alt text][office-icon] Professional Experience
+## Data Scientist @ _e-bot7 GmbH_
+###### ![alt text][office-icon] Full Time	| ![alt text][calendar-icon] July 2019 -- Present | ![alt text][location-icon] Munich, Germany
+-	Primary responsibility is to improve and maintain the QnA ML models and the dialog system.
+-	Streamlined the ML training pipeline.
+-	Improved the performance of inter-service communication by using gRPC.
+
 ## Software Engineer for Machine Learning @ _Kaia health software GmbH_
-###### ![alt text][office-icon] Work Student	| ![alt text][calendar-icon] March 2018 -- Present | ![alt text][location-icon] Munich, Germany
+###### ![alt text][office-icon] Work Student	| ![alt text][calendar-icon] March 2018 -- April 2019 | ![alt text][location-icon] Munich, Germany
 -	Working on a technique to watermark deep learning models.
 -	Streamlined pose estimation training pipeline using PyTorch Ignite. Created a framework for hyperparameter tuning and automatic conversion of trained models to coreml format.
 -	Set up AWS infrastructure of Kaia for HIPAA compliance in US.
@@ -43,12 +49,16 @@ Hello! I am a Master's student at Technical University of Munich. I am studying 
 ######	![alt text][office-icon] Full Time | ![alt text][calendar-icon] June 2013 -- Nov 2015 | ![alt text][location-icon] New Delhi, India
 -	Primary responsibilities included backend development of web based applications, monitoring and scaling of website's performance.
 
-# ![alt text][project-icon] Ongoing Projects
+[//]: <> # ![alt text][project-icon] Ongoing Projects
+[//]: <> ##	Aspect Based Sentiment Analysis (ABSA)
+[//]: <> ######	![alt text][project-icon] Master Thesis | ![alt text][calendar-icon] Sept 2018 -- Present
+[//]: <> A novel approach to jointly detect aspect and the corresponding sentiment in a given sentence using DNN and transfer learning.
+
+# ![alt text][project-icon] Graduate Projects
 ##	Aspect Based Sentiment Analysis (ABSA)
 ######	![alt text][project-icon] Master Thesis | ![alt text][calendar-icon] Sept 2018 -- Present
 A novel approach to jointly detect aspect and the corresponding sentiment in a given sentence using DNN and transfer learning.
 
-# ![alt text][project-icon] Graduate Projects
 ##	Reimplementation of InfoGAN
 ######	![alt text][project-icon] Practical Course | ![alt text][calendar-icon] Apr 2017 -- Jul 2017
 Implementation and training of InfoGAN for generating MNIST data (achieved results from the paper by Chen et al).
@@ -84,7 +94,7 @@ Implemented a spam filter using Naive Bayes Classifier.
 
 # ![alt text][university-icon] Education
 ##	Master of Science in Informatics
-######	![alt text][university-icon] Technical University of Munich | ![alt text][calendar-icon] Oct 2016 -- Present | ![alt text][tick-icon] Grade: 1.7 [Best-1.0, Worst-5.0]
+######	![alt text][university-icon] Technical University of Munich | ![alt text][calendar-icon] Oct 2016 -- March 2019 | ![alt text][tick-icon] Grade: 1.4, Passed with Distinction
 **Relevant Courses** -- Machine Learning, Deep Learning in Computer Vision, 3D Scanning and Motion Capture, Variational Methods, Medical Augmented Reality, Cloud Computing.
 
 ##	Bachelor of Technology in Software Engineering
@@ -95,6 +105,10 @@ Implemented a spam filter using Naive Bayes Classifier.
 ## Support Staff @ _Peepal Farm_
 ###### ![alt text][volunteer-icon] Volunteer | ![alt text][calendar-icon] Jan 2016 -- Feb 2016 | ![alt text][location-icon] New Delhi, India
 -	Helped the team with technical and hands on work in supporting the cause of helping stray animals.
+
+## Web Developer @ _Peepal Farm_
+###### ![alt text][volunteer-icon] Volunteer | ![alt text][calendar-icon] April 2019 -- Present | ![alt text][location-icon] New Delhi, India
+- [Developed](https://github.com/dugarsumit/pet-finder) a [web platform](http://pet-finder-app2.herokuapp.com/) in supporting the cause of adoption of stray animals.
 
 ## Designer @ _IEEE_
 ###### ![alt text][volunteer-icon] Student Volunteer | ![alt text][calendar-icon] March 2010 -- March 2011 | ![alt text][location-icon] New Delhi, India
