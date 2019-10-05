@@ -19,7 +19,7 @@ on Kinect and HMD.
 
 ![](https://dugarsumit.github.io/images/idp-registration-flow.png)
 
-My goal of the project was to develop a registration pipeline for computing sup>CT</sup>T<sub>Kinect</sub> transformation i.e to obtain the transformation between CT data and the 3D Model obtained via Kinect Fusion. The registratiion system consists to two pipelines namely - Volume rendering pipeline and Registration pipeline. Overall registration system requires volumetric CT data and segmented point cloud as input. We get the segmented point cloud of a body part from a segmentation system. In the first step we generate point cloud of CT data using volume rendering pipeline. Once we have
+My goal of the project was to develop a registration pipeline for computing <sup>CT</sup>T<sub>Kinect</sub> transformation i.e to obtain the transformation between CT data and the 3D Model obtained via Kinect Fusion. The registratiion system consists to two pipelines namely - Volume rendering pipeline and Registration pipeline. Overall registration system requires volumetric CT data and segmented point cloud as input. We get the segmented point cloud of a body part from a segmentation system. In the first step we generate point cloud of CT data using volume rendering pipeline. Once we have
 both the point clouds we then, compute the transformation between CT data point cloud and segmented point cloud. The entire registration process happens in two steps. We first find a good initial
 estimate of the transformation. For this, we use a correspondence matching strategy. Then we refine this estimated transformation using ICP in order to obtain the final transformation.
 
