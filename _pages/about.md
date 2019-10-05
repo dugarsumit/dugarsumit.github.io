@@ -56,7 +56,7 @@ Hello! I am a Data Scientist currently working at e-bot7 GmbH. I studied Informa
 
 # ![alt text][project-icon] Graduate Projects
 ##	Aspect Based Sentiment Analysis (ABSA)
-######	![alt text][project-icon] Master Thesis | ![alt text][calendar-icon] Sept 2018 -- Present
+######	![alt text][project-icon] Master Thesis | ![alt text][calendar-icon] Sept 2018 -- March 2019
 A novel approach to jointly detect aspect and the corresponding sentiment in a given sentence using DNN and transfer learning.
 
 ##	Reimplementation of InfoGAN
