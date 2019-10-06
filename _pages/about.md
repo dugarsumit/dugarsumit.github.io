@@ -24,7 +24,7 @@ Hello! I am a Data Scientist currently working at e-bot7 GmbH. I studied Informa
 
 # ![alt text][office-icon] Professional Experience
 ## Data Scientist @ _e-bot7 GmbH_
-###### ![alt text][office-icon] Full Time	| ![alt text][calendar-icon] July 2019 -- Present | ![alt text][location-icon] Munich, Germany
+###### ![alt text][office-icon] Full Time	| ![alt text][calendar-icon] May 2019 -- Present | ![alt text][location-icon] Munich, Germany
 -	Primary responsibility is to improve and maintain the QnA ML models and the dialog system.
 -	Streamlined the ML training pipeline.
 -	Improved the performance of inter-service communication by using gRPC.
