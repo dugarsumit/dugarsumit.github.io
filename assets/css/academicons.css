@@ -112,6 +112,12 @@
 .ai-google-scholar-square:before {
   content: "\e829";
 }
+.ai-kaggle:before {
+  content: "\e828";
+}
+.ai-kaggle:before {
+  content: "\e829";
+}
 .ai-ieee:before {
   content: "\e830";
 }
