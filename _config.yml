@@ -82,10 +82,10 @@ analytics:
 author:
   name             : "Sumit Dugar"
   avatar           : "profile.jpg"
-  bio              : "Java, Python, C++, Tensorflow, PyTorch, AWS, Ansible, Hibernate, Spring, MongoDB, MySQL, Jenkins, Docker, Tomcat, Flask"
+  bio              : "Java, Python, Tensorflow, PyTorch, Nvidia Triton Server, Tf Serving, Kubeflow, AWS, Ansible, MongoDB, Elasticsearch, MySQL, Jenkins, Docker, Tomcat, FastAPI, RabbitMQ"
   location         : "Munich"
   employer         : "Technical University of Munich"
-  # googlescholar    : 
+  googlescholar    : "https://scholar.google.com/citations?user=MaFOGsYAAAAJ&hl=en"
   email            : "dugar.sumit1990@gmail.com"
   # uri              :
   # bitbucket        :
@@ -103,7 +103,7 @@ author:
   # orcid            : "http://orcid.org/yourorcidurl"
   # pinterest        :
   # soundcloud       :
-  # stackoverflow    : # http://stackoverflow.com/users/123456/username
+  stackoverflow    : "https://stackoverflow.com/users/818541/sumit-dugar"
   # steam            :
   # tumblr           :
   # twitter          : "replacethistwitterhandle"
