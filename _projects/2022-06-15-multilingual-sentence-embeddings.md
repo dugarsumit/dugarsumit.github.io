@@ -1,5 +1,5 @@
 ---
-title: "Approximate Nearest Neighbor(ANN) Libraries"
+title: "Multilingual Sentence Embeddings"
 collection: projects
 permalink: /projects/2022-06-15-multilingual-sentence-embeddings
 type: "Personal Project"
