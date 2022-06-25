@@ -81,7 +81,7 @@ analytics:
 # Site Author
 author:
   name             : "Sumit Dugar"
-  avatar           : "profile.jpeg"
+  avatar           : "profile1.jpeg"
   bio              : "Java, Python, Tensorflow, PyTorch, Nvidia Triton Server, Tf Serving, Kubeflow, AWS, MongoDB, Elasticsearch, MySQL, Jenkins, Docker, FastAPI, RabbitMQ"
   location         : "Munich"
   employer         : "Technical University of Munich"
