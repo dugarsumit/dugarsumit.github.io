@@ -23,11 +23,24 @@ redirect_from:
 Hello! I am a Data Scientist currently working at e-bot7 GmbH. I studied Informatics from Technical University of Munich with major focus on Machine Learning and Natural Language Processing. 
 
 # ![alt text][office-icon] Professional Experience
-## Data Scientist @ _e-bot7 GmbH_
+## Sr Machine Learning Engineer @ _e-bot7 GmbH_
 ###### ![alt text][office-icon] Full Time	| ![alt text][calendar-icon] May 2019 -- Present | ![alt text][location-icon] Munich, Germany
--	Primary responsibility is to improve and maintain the QnA ML models and the dialog system.
--	Streamlined the ML training pipeline.
--	Improved the performance of inter-service communication by using gRPC.
+-	Data Scientist
+	-	Primary responsibilities included research, development and maintenance of ML models for Sentence Similarity and Question Answering tasks.
+	-	Sentence Similarity performance was improved by 20\% points on ebot7 dataset.
+	-	Undertook a solo research project to implement a multilingual sentence similarity model (de,en,fr). This model performs 3\% points better and has 74\% smaller embeddings than the current best ebot7 model.
+-	Machine Learning Engineer
+	-	Implemented a continuous model training/deployment pipeline using Kubeflow, Glue, Athena, Lambda.
+	-	Implemented machine learning model hosting and inference using Tf Serving, Nvidia Triton Server, Docker, gRPC.
+	-	Lead the transition of Embedding management/Nearest Neighbour library from ANNOY to FAISS and finally to Elasticsearch.
+-	Software Engineer
+	- Improved inter-service communication with gRPC.
+	- Took complete ownership of the legacy system(6 services in a team of 7 developers) since the last two years.
+	- Designed and laid the foundation of the new modular and event based system.
+-	Chapter Lead (Python Developers)
+	-	Automated hiring pipelines(using Python) and conducted interviews for Python engineers.
+	-	Hired 7+ candidates for multiple Python teams.
+	-	Conducted bi-weekly 1-1s focusing on knowledge sharing, career growth and personal well being of the developers.
 
 ## Software Engineer for Machine Learning @ _Kaia health software GmbH_
 ###### ![alt text][office-icon] Work Student	| ![alt text][calendar-icon] March 2018 -- April 2019 | ![alt text][location-icon] Munich, Germany
@@ -48,49 +61,6 @@ Hello! I am a Data Scientist currently working at e-bot7 GmbH. I studied Informa
 ##	Software Engineer @ _Snapdeal_
 ######	![alt text][office-icon] Full Time | ![alt text][calendar-icon] June 2013 -- Nov 2015 | ![alt text][location-icon] New Delhi, India
 -	Primary responsibilities included backend development of web based applications, monitoring and scaling of website's performance.
-
-[//]: <> # ![alt text][project-icon] Ongoing Projects
-[//]: <> ##	Aspect Based Sentiment Analysis (ABSA)
-[//]: <> ######	![alt text][project-icon] Master Thesis | ![alt text][calendar-icon] Sept 2018 -- Present
-[//]: <> A novel approach to jointly detect aspect and the corresponding sentiment in a given sentence using DNN and transfer learning.
-
-# ![alt text][project-icon] Graduate Projects
-##	Aspect Based Sentiment Analysis (ABSA)
-######	![alt text][project-icon] Master Thesis | ![alt text][calendar-icon] Sept 2018 -- March 2019
-A novel approach to jointly detect aspect and the corresponding sentiment in a given sentence using DNN and transfer learning.
-
-##	Reimplementation of InfoGAN
-######	![alt text][project-icon] Practical Course | ![alt text][calendar-icon] Apr 2017 -- Jul 2017
-Implementation and training of InfoGAN for generating MNIST data (achieved results from the paper by Chen et al).
-
-##	Dynamic Models with IAF
-######	![alt text][project-icon] Practical Course | ![alt text][calendar-icon] Jul 2017 -- Oct 2017
-Implemented an architecture for modelling a dynamical system with Inverse Autoregressive Flow coupled with Deep Variational Bayes Filter. (Slightly worse results than the then SOA for Inverted Pendulum Data but with reduced sampling complexity)
-
-##	Augmentation of CT/MRI data
-######	![alt text][project-icon] Interdisciplinary Project | ![alt text][calendar-icon] Jun 2017 -- Apr 2018
-Developed a system that allows registration of segmented point cloud to patient CT data and provides augmentation on the segmented point cloud.
-
-##	ICP Analysis
-######	![alt text][project-icon] Course Project | ![alt text][calendar-icon] Oct 2017 -- Feb 2018
-Implementation and analysis of Iterative Closest Point variants such as Projective Matching, Multiresolution Schema, Linearized ICP.
-
-##	RGB to Depth
-######	![alt text][project-icon] Course Project | ![alt text][calendar-icon] Jun 2017 -- Oct 2017
-Implemented an architecture inspired by "Learning fine-scaled depth maps from single RGB images" for extracting depth images from RGB images.
-
-##	Neural Network Visualization using Guided Backprop
-######	![alt text][project-icon] Practical Course | ![alt text][calendar-icon] Oct 2017 -- Mar 2018
-Implemented a web interface for visualizing the working of a protein structure predicting DNN using guided backpropagation technique.
-
-# ![alt text][project-icon] Undergraduate Projects
-## Text Summarization Tool
-######	![alt text][project-icon] Final Bachelor Project
-Implemented a summarization tool that generates summary of a given text using linguistic, statistical and extractive methods.
-
-## Spam Classifier
-######	![alt text][project-icon] Course Project
-Implemented a spam filter using Naive Bayes Classifier.
 
 # ![alt text][university-icon] Education
 ##	Master of Science in Informatics
