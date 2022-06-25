@@ -4,7 +4,7 @@ collection: talks
 type: "Free Friday Talk"
 permalink: /talks/2020-10-04-multi-processing-threading-asyncio
 venue: "Ebot7 GmbH"
-date: 2020-03-18
+date: 2020-10-04
 location: "Munich, Germany"
 ---
 
