@@ -11,7 +11,7 @@ PNNs across a range of architectures, datasets, and tasks, we observe improvemen
 date: 2020-05-16
 venue: 'Proceedings of the 12th Conference on Language Resources and Evaluation (LREC 2020)'
 paperurl: 'https://aclanthology.org/2020.lrec-1.172.pdf'
-citation: '[An Evaluation of Progressive Neural Networksfor Transfer Learning in Natural Language Processing](https://aclanthology.org/2020.lrec-1.172) (Dugar et al., LREC 2020)'
+citation: 'Gerhard Hagerer1†, Abdul Moeed1†, Sumit Dugar1†, Sarthak Gupta1†, Mainak Ghosh1†, Hannah Danner, Oliver Mitevski, Andreas Nawroth, Georg Groh, LREC 2020)'
 ---
 A major challenge in modern neural networks is the utilization of previous knowledge for new tasks in an effective manner, otherwise
 known as transfer learning. Fine-tuning, the most widely used method for achieving this, suffers from catastrophic forgetting. The
