@@ -1,7 +1,7 @@
 ---
 title: "Multi-Domain Dialogue State Tracking"
 collection: talks
-type: "Talk"
+type: "Free Friday Talk"
 permalink: /talks/2020-03-18-multi-domain-dialogue-state-tracking
 venue: "Ebot7 GmbH"
 date: 2020-03-18
