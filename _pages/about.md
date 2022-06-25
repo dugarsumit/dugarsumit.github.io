@@ -62,6 +62,8 @@ Hello! I am a Data Scientist/Machine Learning Engineer/Software Engineer current
 ######	![alt text][office-icon] Full Time | ![alt text][calendar-icon] June 2013 -- Nov 2015 | ![alt text][location-icon] New Delhi, India
 -	Primary responsibilities included backend development of web based applications, monitoring and scaling of website's performance.
 
+---
+
 # ![alt text][university-icon] Education
 ##	Master of Science in Informatics
 ######	![alt text][university-icon] Technical University of Munich | ![alt text][calendar-icon] Oct 2016 -- March 2019 | ![alt text][tick-icon] Grade: 1.4, Passed with Distinction
@@ -70,6 +72,8 @@ Hello! I am a Data Scientist/Machine Learning Engineer/Software Engineer current
 ##	Bachelor of Technology in Software Engineering
 ######	![alt text][university-icon] Delhi Technological University | ![alt text][calendar-icon] Aug 2009 -- May 2013 | ![alt text][tick-icon] Grade: 75.9%, First Class Distinction
 **Relevant Courses** -- Obejct Oriented Programming, Operating Systems, Databases, Engineering Mathematics.
+
+---
 
 # ![alt text][volunteer-icon] Voluntary Work
 ## Support Staff @ _Peepal Farm_
