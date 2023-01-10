@@ -23,23 +23,22 @@ redirect_from:
 Hello! I am a Data Scientist/Machine Learning Engineer/Software Engineer currently working at e-bot7 GmbH.
 
 # ![alt text][office-icon] Professional Experience
-## Sr Machine Learning Engineer @ _e-bot7 GmbH_
+## Sr Machine Learning Engineer (NLP) @ _e-bot7 GmbH_
 ###### ![alt text][office-icon] Full Time	| ![alt text][calendar-icon] May 2019 -- Present | ![alt text][location-icon] Munich, Germany
--	Data Scientist
-	-	Primary responsibilities included research, development and maintenance of ML models for Sentence Similarity and Question Answering tasks.
-	-	Sentence Similarity performance was improved by 20\% points on ebot7 dataset.
-	-	Undertook a solo research project to implement a multilingual sentence similarity model (de,en,fr). This model performs 3\% points better and has 74\% smaller embeddings than the current best ebot7 model.
--	Machine Learning Engineer
+-	Data Scientist & Machine Learning Engineer
+	-	Primary responsibilities included R&D of models for Semantic Search and Question Answering tasks.
+	-	Improved sentence similarity performance by 20% points on ebot7 dataset with Transformer based models and novel data cleaning ideas.
+	-	Introduced multilingual embedding models (de,en,fr) which reduced GPU costs and improved model performance by 3%.
+	-	Reduced embedding dimensions by 74% with knowledge distillation and whitening techniques.
 	-	Implemented a continuous model training/deployment pipeline using Kubeflow, Glue, Athena, Lambda.
 	-	Implemented machine learning model hosting and inference using Tf Serving, Nvidia Triton Server, Docker, gRPC.
-	-	Lead the transition of Embedding management/Nearest Neighbour library from ANNOY to FAISS and finally to Elasticsearch.
+	-	Lead the transition of Embedding management/Nearest Neighbour library from FAISS and to Elasticsearch.
 -	Software Engineer
 	- Improved inter-service communication with gRPC.
-	- Took complete ownership of the legacy system(6 services in a team of 7 developers) since the last two years.
+	- Took complete ownership of the legacy system.
 	- Designed and laid the foundation of the new modular and event based system.
 -	Chapter Lead (Python Developers)
-	-	Automated hiring pipelines(using Python) and conducted interviews for Python engineers.
-	-	Hired 7+ candidates for multiple Python teams.
+	-	Automated hiring pipelines(using Python) and conducted interviews for Python engineers. Hired 7+ candidates.
 	-	Conducted bi-weekly 1-1s focusing on knowledge sharing, career growth and personal well being of the developers.
 
 ## Software Engineer for Machine Learning @ _Kaia health software GmbH_
