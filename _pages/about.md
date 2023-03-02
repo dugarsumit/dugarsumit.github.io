@@ -25,7 +25,7 @@ Hello! I am a Data Scientist/Machine Learning Engineer/Software Engineer current
 # ![alt text][office-icon] Professional Experience
 ## Sr Machine Learning Engineer (NLP) @ _e-bot7 GmbH_
 ###### ![alt text][office-icon] Full Time	| ![alt text][calendar-icon] May 2019 -- Present | ![alt text][location-icon] Munich, Germany
--	Data Scientist & Machine Learning Engineer
+-	Sr Machine Learning Engineer
 	-	Primary responsibilities included R&D of models for Semantic Search and Question Answering tasks.
 	-	Improved sentence similarity performance by 20% points on ebot7 dataset with Transformer based models and novel data cleaning ideas.
 	-	Introduced multilingual embedding models (de,en,fr) which reduced GPU costs and improved model performance by 3%.
@@ -33,11 +33,9 @@ Hello! I am a Data Scientist/Machine Learning Engineer/Software Engineer current
 	-	Implemented a continuous model training/deployment pipeline using Kubeflow, Glue, Athena, Lambda.
 	-	Implemented machine learning model hosting and inference using Tf Serving, Nvidia Triton Server, Docker, gRPC.
 	-	Lead the transition of Embedding management/Nearest Neighbour library from FAISS and to Elasticsearch.
--	Software Engineer
-	- Improved inter-service communication with gRPC.
-	- Took complete ownership of the legacy system.
-	- Designed and laid the foundation of the new modular and event based system.
--	Chapter Lead (Python Developers)
+	- 	Improved inter-service communication with gRPC.
+	- 	Took complete ownership of the legacy system.
+	- 	Designed and laid the foundation of the new modular and event based system.
 	-	Automated hiring pipelines(using Python) and conducted interviews for Python engineers. Hired 7+ candidates.
 	-	Conducted bi-weekly 1-1s focusing on knowledge sharing, career growth and personal well being of the developers.
 
