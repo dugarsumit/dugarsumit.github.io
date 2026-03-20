@@ -84,8 +84,7 @@ author:
   avatar           : "profile1.jpeg"
   bio              : "Python, Java, LightGBM, XGBoost, Transformers, LLMs, Tensorflow, PyTorch, LangGraph, LangFuse, Nvidia Triton Server, Tf Serving, FastAPI, Flask, MLflow, Kubeflow, Airflow, MongoDB, Elasticsearch, MySQL, PostgreSQL, RabbitMQ, Kafka, Iceberg, Trino, DBT, Superset, Jenkins, Skaffold, Flux, Docker, Prometheus, Grafana, Graylog, Streamlit, AWS, Kubernetes"
   location         : "Munich"
-  employer         : "Technical University of Munich"
-  employer         : "Delhi Technological University"
+  employer         : "MSc in Informatics, Technical University of Munich, BSc in Software Engineering, Delhi Technological University"
   googlescholar    : "https://scholar.google.com/citations?user=MaFOGsYAAAAJ&hl=en"
   email            : "dugar.sumit1990@gmail.com"
   # uri              :
