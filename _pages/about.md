@@ -20,7 +20,7 @@ redirect_from:
 [download-icon]: https://dugarsumit.github.io/images/download-icon16x16.png
 [volunteer-icon]: https://dugarsumit.github.io/images/volunteer-icon16x16.png
 
-Hello! I am a Data Scientist/Machine Learning Engineer/Software Engineer currently working at e-bot7 GmbH.
+Hello! I am a Data Scientist/Machine Learning Engineer/Software Engineer currently working at check24.
 
 # ![alt text][office-icon] Professional Experience
 ## Sr Machine Learning Engineer (NLP) @ _e-bot7 GmbH_
