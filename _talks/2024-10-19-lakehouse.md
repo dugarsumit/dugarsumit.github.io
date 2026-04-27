@@ -1,3 +1,4 @@
+<!--
 ---
 title: "An overview of Lakehouse Architecture"
 collection: talks
@@ -26,3 +27,4 @@ Technology Choices (Rationale)
 ![](https://dugarsumit.github.io/images/lakehouse.png)
 
 [For more details read this report](https://dugarsumit.github.io/files/lakehouse_architecture.pdf)
+-->
