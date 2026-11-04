@@ -342,6 +342,16 @@ html.dm-open{overflow:hidden}
 .agechip.new{background:#e5f6ed;color:#0f6b3f}.agechip.mid{background:#e7f0ff;color:#2b4fb8}.agechip.old{background:#fff3dc;color:#8f5300}.agechip.vold{background:#fde8e6;color:#a1322b}.agechip.unk{background:#f1f3f5;color:#5c6670}
 .agefilter{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:8px;font-size:12.5px;color:var(--muted)}
 .agefilter select{font:inherit;padding:5px 8px;border-radius:7px;border:1px solid var(--line);background:var(--chip);color:var(--fg)}
+.yc-ic{width:26px!important;height:22px!important;margin:-11px 0 0 -13px!important;background:var(--bosch);border:2px solid #fff;border-radius:6px;color:#fff;font:700 11px/18px var(--mdisp);letter-spacing:.3px;text-align:center;box-shadow:0 0 0 3px rgba(200,16,46,.35),0 2px 6px rgba(0,0,0,.35)}
+.yc-ic.unv{opacity:.6}
+.yc-ic.hl{animation:glow 1.1s ease-in-out 4}
+.sw.yc{width:22px;height:15px;border-radius:4px;background:var(--bosch);color:#fff;font:700 9px/15px var(--mdisp);text-align:center;display:inline-block;flex:none}
+.lg-sw .sw.yc{width:22px;height:15px;font-size:9px;line-height:15px}
+.dm-ic .sw.yc{width:22px;height:15px}
+.co-pick{display:flex;flex-direction:column;gap:6px}
+.co-pick select{width:100%;font:inherit;padding:9px 10px;border-radius:8px;border:1px solid var(--line);background:var(--chip);color:var(--fg)}
+.co-pick select:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){.yc-ic.hl{animation:none}}
 </style>
 
 <div class="wrap">
@@ -393,11 +403,14 @@ html.dm-open{overflow:hidden}
 
 
   <section class="card col-12" id="map-section">
-    <h2>Interactive map: offices, Bosch sites &amp; metro</h2>
-    <p class="muted" style="margin-top:-6px">Every office cluster from this guide, all Bosch sites, and Namma Metro lines by status (as of 17 Oct 2026). Click anywhere on the map, or on a housing zone, to see the distance and peak-hour travel time to every office, Bosch site, hospital and school.</p>
+    <h2>Interactive map: offices, your company &amp; metro</h2>
+    <p class="muted" style="margin-top:-6px">Every office from this guide, your own company's offices (pick it below), and Namma Metro lines by status (as of 17 Oct 2026). Click anywhere on the map, or on a housing zone, to see the distance and peak-hour travel time to every office, Bosch site, hospital and school.</p>
     <div class="mapapp">
       <div id="map" role="application" aria-label="Map of Bengaluru"></div>
       <div class="mrail">
+        <div class="co-pick"><h4>Your company</h4>
+          <select id="coSel" aria-label="Your company"></select>
+          <div class="hint" id="coHint"></div></div>
         <div><h4>Check an address</h4>
           <form class="addr" id="addrForm" autocomplete="off">
             <input class="msearch" id="addrIn" type="text" placeholder="e.g. 27th Main, HSR Sector 2 · or a Google Maps link" aria-label="Address, locality, landmark, Google Maps link or coordinates">
@@ -406,7 +419,7 @@ html.dm-open{overflow:hidden}
           <div class="hint" id="addrMsg">Type a locality, landmark, society area or metro station, or paste a Google Maps link or coordinates for an exact spot.</div></div>
         <div><h4>Spot check</h4><div class="spot" id="spot" aria-live="polite"></div></div>
         <div><h4>Find a company</h4>
-          <input class="msearch" id="q" type="search" placeholder="e.g. Rubrik, Bosch, Razorpay" autocomplete="off">
+          <input class="msearch" id="q" type="search" placeholder="e.g. Rubrik, Adobe, Razorpay" autocomplete="off">
           <div class="hint" id="qres">Matching offices pulse on the map. Stars mark the high-paying employers.</div></div>
         <div><h4>Offices</h4><div class="toggles" id="officeToggles"></div></div>
         <div><h4>Metro lines</h4><div class="lines" id="lineRows"></div>
@@ -432,7 +445,7 @@ html.dm-open{overflow:hidden}
           <li><b>HSR Sector 1/2</b> is one stop from Central Silk Board, where the Blue Line meets the operational Yellow Line to Bommanahalli and Electronic City.</li>
           <li><b>Bellandur, ETV and Cessna</b> get Blue Line stations, but the ORR section is targeted for 2027, so they have no metro today.</li>
           <li><b>Harlur</b> has no line of its own; the nearest planned stations (Iblur, Kaikondrahalli) are about 2 km away.</li>
-          <li><b>Bosch sites</b> (per Bosch's own pages): India HQ in Adugodi, BGSW in Koramangala and at 360° Business Park in Electronic City, and plants at Naganathapura and Bidadi. Koramangala and Adugodi are closest to HSR and BTM; Electronic City suits the BGSW campus.</li>
+          <li><b>Click any office</b> (or a YC badge) to open a list of every mapped apartment society sorted by distance and peak-hour travel time from that office.</li><li id="myNote"></li>
         </ul>
       </div>
     </div>
@@ -962,12 +975,27 @@ OFFICES.forEach(o=>{
     .bindTooltip(o.name,{direction:"top",offset:[0,-sh.size/2],className:"tt"})
     .bindPopup(`<div class="pop"><h3>${o.name}</h3><div class="meta"><b>${o.office}</b></div><div class="meta">${o.address}</div>${o.note?`<div class="meta">${o.note}</div>`:""}<span class="tier" style="background:${col}">${CATS[o.cat].n}</span> <span class="qtag ${o.v?"ok":"unverified"}">${o.v?({site:"Official website",press:"Official press release",filing:"Company filing"}[o.kind]):"Not on official site"}</span>${o.src?`<div class="meta" style="margin-top:6px"><a href="${o.src}" target="_blank" rel="noopener">Source</a></div>`:""}</div>`)
     .addTo(officeLayers[o.cat]);
+  m.on("click",()=>openApts(o.ll,o.name,`${o.office}${o.v?" · "+o.address:""}`));
   officeMarkers.push({o,m});
 });
-const boschLayer=L.layerGroup().addTo(map);
-const boschMarkers=BOSCH.map(b=>L.marker(b.ll,{icon:L.divIcon({className:"bosch-ic",html:"B",iconSize:null}),zIndexOffset:1000,title:b.name})
-  .bindPopup(`<div class="pop"><h3>${b.name}</h3><div class="meta">${b.area}</div><span class="tier" style="background:${css("--bosch")}">Bosch</span></div>`)
-  .bindTooltip(`Bosch · ${b.area}`,{direction:"top",offset:[0,-12],className:"tt"}).addTo(boschLayer));
+/* ---------- Your company ---------- */
+const CITY_C=[12.9716,77.5946];
+const COMPANIES={"Bosch":BOSCH.map(b=>({name:b.name,area:b.area,ll:b.ll,city:b.city,v:1}))};
+OFFICES.forEach(o=>{(COMPANIES[o.name]=COMPANIES[o.name]||[]).push({name:o.office,area:o.address,ll:o.ll,v:o.v,city:true,_o:o});});
+Object.keys(COMPANIES).forEach(k=>{if(k==="Bosch")return;const L_=COMPANIES[k];const ver=L_.filter(x=>x.v);COMPANIES[k]=(ver.length?ver:L_).map(x=>({...x,city:Math.hypot(x.ll[0]-CITY_C[0],(x.ll[1]-CITY_C[1])*0.975)*111<25}));});
+const CO_NAMES=Object.keys(COMPANIES).sort((a,b)=>a.localeCompare(b));
+let MY_NAME="Bosch";try{const sv=localStorage.getItem("myCompany");if(sv&&COMPANIES[sv])MY_NAME=sv;}catch(e){}
+let MY=COMPANIES[MY_NAME];
+const myLayer=L.layerGroup().addTo(map);
+let myMarkers=[];
+function buildMy(){
+  myLayer.clearLayers();
+  officeMarkers.forEach(({o,m})=>{const lg=officeLayers[o.cat];if(o.name===MY_NAME){if(lg.hasLayer(m))lg.removeLayer(m);}else if(!lg.hasLayer(m))lg.addLayer(m);});
+  myMarkers=MY.map(b=>L.marker(b.ll,{icon:L.divIcon({className:"yc-ic"+(b.v?"":" unv"),html:"YC",iconSize:null}),zIndexOffset:3500,title:`${MY_NAME} · ${b.name}`})
+    .bindPopup(`<div class="pop"><h3>${MY_NAME}</h3><div class="meta"><b>${b.name}</b></div><div class="meta">${b.area}</div><span class="tier" style="background:${css("--bosch")}">Your company</span>${b.v?"":' <span class="qtag unverified">Not on official site</span>'}</div>`)
+    .bindTooltip(`Your company · ${MY_NAME} · ${b.name}`,{direction:"top",offset:[0,-12],className:"tt"}).on("click",()=>openApts(b.ll,`${MY_NAME} (your company)`,`${b.name} · ${b.area}`)).addTo(myLayer));
+}
+buildMy();
 
 /* Hospitals & schools */
 const HOSP=[{"n": "Manipal Hospital, Old Airport Rd", "area": "Kodihalli, HAL Old Airport Rd", "type": "Multi-specialty", "note": "Flagship tertiary-care hospital; transplants", "ll": [12.9584, 77.6488]}, {"n": "Manipal Hospital, Sarjapur Rd", "area": "Ambalipura, opposite Iblur", "type": "Multi-specialty", "note": "Formerly Columbia Asia; 206 beds", "ll": [12.9201, 77.6654]}, {"n": "Manipal Hospital, Varthur Rd", "area": "Varthur Kodi, Whitefield", "type": "Multi-specialty", "note": "", "ll": [12.9583, 77.7454]}, {"n": "Narayana Health City & Mazumdar Shaw", "area": "Bommasandra", "type": "Multi-specialty / cardiac / oncology", "note": "Cardiac surgery hub; cancer care, transplants", "ll": [12.8077, 77.6951]}, {"n": "Narayana Multispeciality, HSR", "area": "18th Main, HSR Sector 3", "type": "Multi-specialty", "note": "NABH; 24x7 emergency, cath lab", "ll": [12.9081, 77.6435]}, {"n": "Sakra World Hospital", "area": "Devarabeesanahalli, ORR", "type": "Multi-specialty", "note": "Tertiary care; neuro, ortho, cardiac", "ll": [12.9326, 77.6851]}, {"n": "St. John's Medical College Hospital", "area": "John Nagar, Koramangala", "type": "Medical college", "note": "Large teaching hospital, lower cost", "ll": [12.9309, 77.6195]}, {"n": "Motherhood Hospital", "area": "Kaikondrahalli, Sarjapur Rd", "type": "Maternity & children", "note": "Maternity, NICU", "ll": [12.9179, 77.6717]}, {"n": "Cloudnine, Jayanagar", "area": "Jayanagar 1st Block", "type": "Maternity & children", "note": "Maternity, NICU", "ll": [12.9339, 77.5839]}, {"n": "Cloudnine, Bellandur", "area": "ORR service road, Bellandur", "type": "Maternity & children", "note": "", "ll": [12.9244, 77.6725]}, {"n": "Cloudnine, Haralur", "area": "Kaikondrahalli, Haralur", "type": "Maternity & children", "note": "", "ll": [12.9158, 77.6746]}, {"n": "Apollo Hospital, Jayanagar", "area": "14th Cross, near Madhavan Park", "type": "Multi-specialty", "note": "150 beds; ortho, neuro, spine (location approx.)", "ll": [12.9375, 77.5843]}, {"n": "Apollo Hospitals, Bannerghatta Rd", "area": "Opposite IIM-B", "type": "Multi-specialty", "note": "250 beds; cardiac", "ll": [12.8961, 77.5985]}, {"n": "Fortis Hospital, Bannerghatta Rd", "area": "Bannerghatta Rd", "type": "Multi-specialty", "note": "JCI + NABH; cardiac, transplant, robotic surgery", "ll": [12.8948, 77.5964]}, {"n": "Sagar Hospitals, Jayanagar", "area": "Tilak Nagar Main Rd", "type": "Multi-specialty", "note": "", "ll": [12.9283, 77.5998]}, {"n": "Rainbow Children's Hospital, Marathahalli", "area": "Sarjapur–Marathahalli Rd", "type": "Children's & maternity", "note": "Main Bengaluru branch (location approx.)", "ll": [12.939, 77.696]}, {"n": "Rainbow Children's Hospital, Bannerghatta Rd", "area": "Bilekahalli", "type": "Children's", "note": "Location approx.", "ll": [12.899, 77.6]}, {"n": "Kauvery Hospital, Electronic City", "area": "Konappana Agrahara, E-City Phase 1", "type": "Multi-specialty", "note": "200+ beds", "ll": [12.8546, 77.6627]}, {"n": "Kauvery Hospital, Marathahalli", "area": "Munnekollal, Old Airport Rd", "type": "Multi-specialty", "note": "220+ beds", "ll": [12.9559, 77.7087]}, {"n": "Sparsh Hospital, Sarjapura", "area": "Carmelaram, Sarjapur Main Rd", "type": "Multi-specialty", "note": "Orthopaedics, trauma", "ll": [12.9112, 77.6844]}, {"n": "Ovum Hospital, HSR", "area": "25th Cross, HSR Sector 2", "type": "Women & children", "note": "Level III NICU, fertility care", "ll": [12.9072, 77.6456]}];
@@ -1028,15 +1056,16 @@ function analyse(ll){
   const within=r=>{const set=new Map();OFFICES.forEach(o=>{if(o.v&&km(ll,o.ll)<=r){const k=o.name.replace(/ \(ecosystem\)$/,"");if(!set.has(k))set.set(k,o.cat);}});return set;};
   const w5=within(5),w3=within(3);
   const top5=[...w5].filter(([,c])=>c==="top"||c==="strong").map(([n])=>n);
-  const bosch=BOSCH.filter(b=>b.city).map(b=>({b,d:km(ll,b.ll)})).sort((x,y)=>x.d-y.d);
-  return {w5,w3,top5,bosch,now:nearest(ll,"now"),next:nearest(ll,"next"),prop:nearest(ll,"prop")};
+  let mine=MY.filter(b=>b.city);if(!mine.length)mine=MY;
+  const my=mine.map(b=>({b,d:km(ll,b.ll)})).sort((x,y)=>x.d-y.d);
+  return {w5,w3,top5,my,now:nearest(ll,"now"),next:nearest(ll,"next"),prop:nearest(ll,"prop")};
 }
 const f1=x=>x.toFixed(1);
 let pin=null;
 const HUMAN=(px,tail=true)=>`<svg viewBox="0 0 34 44" width="${px}" height="${Math.round(px*44/34)}" aria-hidden="true">${tail?'<path d="M17 43 10 30h14z" fill="#172033"/>':''}<circle cx="17" cy="17" r="15.5" fill="#172033" stroke="#fff" stroke-width="2.5"/><circle cx="17" cy="11.5" r="4.6" fill="#fff"/><path d="M8.6 26.5c.6-5.2 4-8.3 8.4-8.3s7.8 3.1 8.4 8.3a12.4 12.4 0 0 1-16.8 0z" fill="#fff"/></svg>`;
 let lastSpot=null;
 function setSpot(ll,label,zone,open){
-  lastSpot={ll,label};
+  lastSpot={ll,label,zone};
   const a=analyse(ll);
   if(pin) pin.remove();
   pin=L.marker(ll,{icon:L.divIcon({className:"human-ic",html:HUMAN(34),iconSize:[34,44],iconAnchor:[17,42]}),zIndexOffset:4000,interactive:false}).addTo(map);
@@ -1053,7 +1082,7 @@ function setSpot(ll,label,zone,open){
       ${st(a.now,"Metro now")}${st(a.next,"Upcoming")}${st(a.prop,"Proposed")}
     </tbody></table>
     <table class="mini"><tbody>
-      ${a.bosch.map(x=>`<tr><td><span style="color:var(--bosch);font-weight:700">B</span> ${x.b.area}</td><td>${f1(x.d)} km</td></tr>`).join("")}
+      <tr><td colspan="2" class="names" style="padding-top:6px">Your company: <b>${MY_NAME}</b></td></tr>${a.my.slice(0,5).map(x=>`<tr><td><span class="sw yc">YC</span> ${x.b.name}${x.b.v?"":" (unconfirmed)"}</td><td>${f1(x.d)} km</td></tr>`).join("")}${a.my.length>5?`<tr><td colspan="2" class="names">+${a.my.length-5} more in the distances list</td></tr>`:""}
     </tbody></table>
     <div class="names">High-pay within 5 km: ${a.top5.length?a.top5.map(n=>`<b>${n}</b>`).join(", "):"none"}</div>
     <button type="button" class="dm-open-btn" id="dmOpenBtn">Distances &amp; travel times to every office</button>`;
@@ -1084,7 +1113,7 @@ const modal=document.createElement("div");
 modal.className="dm-backdrop";modal.hidden=true;
 modal.innerHTML=`<div class="dm" role="dialog" aria-modal="true" aria-labelledby="dmTitle">
   <div class="dm-head">
-    <div><div class="dm-eyebrow">Distances from selected location</div><h3 id="dmTitle"></h3><div class="dm-sub" id="dmSub"></div></div>
+    <div><div class="dm-eyebrow" id="dmEyebrow">Distances from selected location</div><h3 id="dmTitle"></h3><div class="dm-sub" id="dmSub"></div></div>
     <button class="dm-x" type="button" id="dmClose" aria-label="Close">×</button>
   </div>
   <div class="dm-chips" id="dmChips"></div>
@@ -1098,10 +1127,11 @@ function dmRow(i,icon,name,meta,t,act){
   return `<button type="button" class="dm-row" data-act="${act}"><span class="dm-n">${i}</span><span class="dm-ic">${icon}</span><span class="dm-name"><b>${name}</b><small>${meta}</small></span><span class="dm-d"><b>${f1(t.d)} km</b><small>~${f1(t.road)} km by road</small></span><span class="dm-t"><b>${fmtT(t)}</b>${t.silk?'<small class="dm-flag">via Silk Board</small>':'<small>peak hours</small>'}</span></button>`;
 }
 function dmRender(){
+  if(dmData.mode==="apt")return aptRender();
   const {ll}=dmData;
-  const bosch=BOSCH.map((b,i)=>({b,i,t:travel(ll,b.ll)})).sort((x,y)=>x.t.d-y.t.d);
-  const offs=OFFICES.map((o,i)=>({o,i,t:travel(ll,o.ll)})).filter(x=>dmFilter==="all"||dmFilter==="bosch"?true:(dmFilter==="high"?(x.o.cat==="top"||x.o.cat==="strong"):x.o.cat===dmFilter)).sort((x,y)=>x.t.d-y.t.d);
-  const bRows=bosch.map(x=>({t:x.t,html:k=>dmRow(k,'<span class="sw sq">B</span>',x.b.area,x.b.name+" · Bosch",x.t,"b"+x.i)}));
+  const mine=MY.map((b,i)=>({b,i,t:travel(ll,b.ll)})).sort((x,y)=>x.t.d-y.t.d);
+  const offs=OFFICES.map((o,i)=>({o,i,t:travel(ll,o.ll)})).filter(x=>x.o.name!==MY_NAME).filter(x=>dmFilter==="all"||dmFilter==="mine"?true:(dmFilter==="high"?(x.o.cat==="top"||x.o.cat==="strong"):x.o.cat===dmFilter)).sort((x,y)=>x.t.d-y.t.d);
+  const bRows=mine.map(x=>({t:x.t,html:k=>dmRow(k,'<span class="sw yc">YC</span>',`${MY_NAME} · ${x.b.name}`,`Your company${x.b.v?"":" (not on official site)"} · ${x.b.area}`,x.t,"b"+x.i)}));
   const oRows=offs.map(x=>({t:x.t,html:k=>dmRow(k,shapeSVG(x.o.cat,16),x.o.name+(x.o.v?"":" (not on official site)"),`${x.o.office}${x.o.v?" · "+x.o.address:""}`,x.t,"o"+x.i)}));
   const hRows=HOSP.map((x,i)=>({t:travel(ll,x.ll),x,i})).sort((a,b)=>a.t.d-b.t.d).map(r=>({t:r.t,html:k=>dmRow(k,iconH(16),r.x.n,`${r.x.area} · ${r.x.type}`,r.t,"h"+r.i)}));
   const sRows=SCHOOLS.map((x,i)=>({t:travel(ll,x.ll),x,i})).sort((a,b)=>a.t.d-b.t.d).map(r=>({t:r.t,html:k=>dmRow(k,iconS(16),r.x.n,`${r.x.area} · ${r.x.type}`,r.t,"s"+r.i)}));
@@ -1116,7 +1146,7 @@ function dmRender(){
         `<div class="dm-sec">Nearest schools <span>top 3 of ${sRows.length}</span></div>`+sRows.slice(0,3).map((r,k)=>r.html(k+1)).join("");
   }
   if(dmFilter==="all"){list=bRows.concat(oRows).sort((a,b)=>a.t.d-b.t.d);title="All offices, nearest first";}
-  else if(dmFilter==="bosch"){list=bRows;title="Bosch offices";}
+  else if(dmFilter==="mine"){list=bRows;title=`${MY_NAME} offices (your company)`;}
   else{list=oRows;title=dmFilter==="high"?"High-paying companies":CATS[dmFilter].n;}
   const h=dmData.liv+ess+`<div class="dm-sec">${title} <span>${list.length}</span></div>`+list.map((r,k)=>r.html(k+1)).join("");
   const body=document.getElementById("dmBody");body.innerHTML=h;body.scrollTop=0;
@@ -1141,12 +1171,43 @@ function livHTML(ll,label){
     <div class="dm-says"><div class="dm-says-h">What residents say</div>${L_.f.map(f=>`<div class="dm-say"><b>${f.n}</b><p class="gd"><span>+</span>${f.g}</p><p class="bd"><span>−</span>${f.b}</p></div>`).join("")}</div>
   </details>`;
 }
+function aptRender(){
+  const {ll}=dmData;
+  const all=SOCIETIES.map((x,i)=>({x,i,g:"soc",act:"q"+i})).concat(MORE_SOC.map((x,i)=>({x,i,g:x.grp,act:"g"+i})))
+    .map(r=>({...r,t:travel(ll,r.x.ll),a:ageInfo(r.x)}));
+  const F={"all":()=>true,"soc":r=>r.g==="soc","big":r=>r.g==="big","var":r=>r.g==="var","new":r=>r.a&&(r.a.cls==="new"||r.a.cls==="mid")};
+  const list=all.filter(F[dmFilter]||F.all).sort((a,b)=>a.t.d-b.t.d);
+  const ic={soc:iconSoc(16),big:iconBig(15),var:iconVar(15)}, lab={soc:"Your shortlist",big:"Large gated society",var:"Similar-name match"};
+  const title={all:"All apartments, nearest first",soc:"Your shortlisted societies",big:"Other large gated societies",var:"Similar-name matches",new:"Built in the last 10 years (or under construction)"}[dmFilter];
+  const within=r=>all.filter(x=>x.t.d<=r).length;
+  const sum=`<div class="dm-liv dm-liv-none">${within(3)} apartments within 3 km · ${within(5)} within 5 km · ${within(10)} within 10 km of this office.</div>`;
+  const rows=list.map((r,k)=>dmRow(k+1,ic[r.g],r.x.n,[lab[r.g],r.x.addr,r.a?r.a.short:"",r.x.units?r.x.units+" flats":""].filter(Boolean).join(" · "),r.t,r.act)).join("");
+  const body=document.getElementById("dmBody");
+  body.innerHTML=sum+`<div class="dm-sec">${title} <span>${list.length}</span></div>`+(rows||'<div class="dm-liv dm-liv-none">No apartments match this filter.</div>');body.scrollTop=0;
+  document.querySelectorAll("#dmChips button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.f===dmFilter));
+}
+function dmShow(){
+  dmRender();
+  dmLastFocus=document.activeElement;
+  modal.hidden=false;document.documentElement.classList.add("dm-open");
+  document.getElementById("dmClose").focus();
+}
+function openApts(ll,label,sub){
+  dmData={ll,label,mode:"apt"};dmFilter="all";
+  document.getElementById("dmEyebrow").textContent="Apartments by distance from this office";
+  document.getElementById("dmTitle").textContent=label;
+  document.getElementById("dmSub").textContent=sub;
+  const chips=[["all","All"],["soc","Your shortlist"],["big","Large gated"],["var","Similar names"],["new","≤10 yrs old"]];
+  document.getElementById("dmChips").innerHTML=chips.map(([f,t])=>`<button type="button" data-f="${f}" aria-pressed="false">${t}</button>`).join("");
+  dmShow();
+}
 function openDistances(ll,label){
   dmData={ll,label,liv:livHTML(ll,label)};dmFilter="all";
+  document.getElementById("dmEyebrow").textContent="Distances from selected location";
   document.getElementById("dmTitle").textContent=label;
   const a=analyse(ll);
-  document.getElementById("dmSub").textContent=`${a.w5.size} companies within 5 km · nearest Bosch site ${f1(a.bosch[0].d)} km (${a.bosch[0].b.area})`;
-  const chips=[["all","All"],["bosch","Bosch only"],["high","High-paying ★"],["top","Elite"],["strong","Strong"],["startup","Startups"],["gcc","MNC / GCC"],["svc","IT services"],["hosp","Hospitals"],["school","Schools"]];
+  document.getElementById("dmSub").textContent=`${a.w5.size} companies within 5 km · nearest ${MY_NAME} office ${f1(a.my[0].d)} km (${a.my[0].b.name})`;
+  const chips=[["all","All"],["mine",`${MY_NAME} only`],["high","High-paying ★"],["top","Elite"],["strong","Strong"],["startup","Startups"],["gcc","MNC / GCC"],["svc","IT services"],["hosp","Hospitals"],["school","Schools"]];
   document.getElementById("dmChips").innerHTML=chips.map(([f,t])=>`<button type="button" data-f="${f}" aria-pressed="false">${t}</button>`).join("");
   dmRender();
   dmLastFocus=document.activeElement;
@@ -1163,8 +1224,13 @@ document.getElementById("dmBody").addEventListener("click",e=>{
   const act=r.dataset.act, idx=+act.slice(1);
   closeDistances();
   document.getElementById("map").scrollIntoView({behavior:"smooth",block:"center"});
+  if(act[0]==="q"||act[0]==="g"){const x=act[0]==="q"?SOCIETIES[idx]:MORE_SOC[idx];const m=act[0]==="q"?socMarkers[idx]:moreMarkers[idx];
+    const lg=act[0]==="q"?socLayer:(x.grp==="big"?bigLayer:varLayer), id=act[0]==="q"?"t-soc":(x.grp==="big"?"t-socbig":"t-socvar");
+    if(!map.hasLayer(lg)){lg.addTo(map);const cb=document.getElementById(id);if(cb)cb.checked=true;}
+    if(!lg.hasLayer(m)){lg.addLayer(m);}
+    map.flyTo(m.getLatLng(),16,{duration:.7});setTimeout(()=>m.openPopup(),750);return;}
   if(act[0]==="h"||act[0]==="s"){const m=(act[0]==="h"?hospMarkers:schoolMarkers)[idx];const lg=act[0]==="h"?hospLayer:schoolLayer;if(!map.hasLayer(lg)){lg.addTo(map);const cb=document.getElementById(act[0]==="h"?"t-hosp":"t-school");if(cb)cb.checked=true;}map.flyTo(m.getLatLng(),15,{duration:.7});setTimeout(()=>m.openPopup(),750);return;}
-  if(act[0]==="b"){const m=boschMarkers[idx];map.flyTo(m.getLatLng(),15,{duration:.7});setTimeout(()=>m.openPopup(),750);}
+  if(act[0]==="b"){const m=myMarkers[idx];if(!map.hasLayer(myLayer)){myLayer.addTo(map);const cb=document.getElementById("t-my");if(cb)cb.checked=true;}map.flyTo(m.getLatLng(),15,{duration:.7});setTimeout(()=>m.openPopup(),750);}
   else{const m=officeMarkers[idx].m;const lg=officeLayers[OFFICES[idx].cat];if(!map.hasLayer(lg)){lg.addTo(map);const cb=document.getElementById("t-"+OFFICES[idx].cat);if(cb)cb.checked=true;}
     map.flyTo(m.getLatLng(),16,{duration:.7});setTimeout(()=>m.openPopup(),750);}
 });
@@ -1234,13 +1300,17 @@ function runAddr(q){
 document.getElementById("addrForm").addEventListener("submit",e=>{e.preventDefault();const v=document.getElementById("addrIn").value;if(v.trim().length>1)runAddr(v);});
 
 /* Comparison table */
-(function(){
+function renderCmp(){
   const t=document.getElementById("cmp");
   const rows=ZONES.map(z=>{const a=analyse(z.ll);return {z,a};});
-  t.innerHTML=`<thead><tr><th>Zone</th><th>2BHK rent</th><th>3BHK rent</th><th>Buy</th><th>Livability</th><th>Cos ≤5 km</th><th>High-pay</th><th>Nearest Bosch</th><th>Metro now</th><th>Upcoming</th></tr></thead><tbody>`+
-   rows.map(({z,a},i)=>`<tr data-i="${i}"><td><b>${z.n}</b>${z.role!=="other"?`<span class="pick" style="background:${css(ROLE[z.role].v)}">${z.role==="both"?"Rent+Buy":z.role}</span>`:""}</td><td>${z.rent2}</td><td>${z.rent}</td><td>${z.buy}</td><td class="n">${z.liv.toFixed(1)}</td><td class="n">${a.w5.size}</td><td class="n">${a.top5.length}</td><td class="n">${f1(a.bosch[0].d)} km</td><td class="n">${f1(a.now.d)} km</td><td class="n">${f1(a.next.d)} km</td></tr>`).join("")+"</tbody>";
+  t.innerHTML=`<thead><tr><th>Zone</th><th>2BHK rent</th><th>3BHK rent</th><th>Buy</th><th>Livability</th><th>Cos ≤5 km</th><th>High-pay</th><th>Nearest ${MY_NAME}</th><th>Metro now</th><th>Upcoming</th></tr></thead><tbody>`+
+   rows.map(({z,a},i)=>`<tr data-i="${i}"><td><b>${z.n}</b>${z.role!=="other"?`<span class="pick" style="background:${css(ROLE[z.role].v)}">${z.role==="both"?"Rent+Buy":z.role}</span>`:""}</td><td>${z.rent2}</td><td>${z.rent}</td><td>${z.buy}</td><td class="n">${z.liv.toFixed(1)}</td><td class="n">${a.w5.size}</td><td class="n">${a.top5.length}</td><td class="n">${f1(a.my[0].d)} km</td><td class="n">${f1(a.now.d)} km</td><td class="n">${f1(a.next.d)} km</td></tr>`).join("")+"</tbody>";
   t.querySelectorAll("tbody tr").forEach(tr=>tr.addEventListener("click",()=>{const z=ZONES[+tr.dataset.i];map.flyTo(z.ll,14,{duration:.8});setSpot(z.ll,z.n,z,true);}));
-})();
+  const best=rows.slice().sort((x,y)=>x.a.my[0].d-y.a.my[0].d)[0];
+  const ver=MY.filter(b=>b.v).length;
+  document.getElementById("myNote").innerHTML=`<b>Your company: ${MY_NAME}.</b> ${MY.length} Bengaluru office${MY.length>1?"s":""} on the map${ver<MY.length?` (${MY.length-ver} not confirmed on the official site)`:""}: ${MY.map(b=>b.name).join("; ")}. Closest housing zone: <b>${best.z.n}</b>, ${f1(best.a.my[0].d)} km to the nearest office.`;
+}
+renderCmp();
 
 /* Toggles */
 function toggle(container,id,label,sw,layer,on=true){
@@ -1252,7 +1322,7 @@ function toggle(container,id,label,sw,layer,on=true){
   container.appendChild(lab);
 }
 const ot=document.getElementById("officeToggles");
-toggle(ot,"t-bosch","Bosch sites",`<i class="sw sq">B</i>`,boschLayer);
+toggle(ot,"t-my",`Your company`,`<i class="sw yc">YC</i>`,myLayer);
 Object.entries(CATS).forEach(([k,c])=>toggle(ot,"t-"+k,c.n,`<i class="sw shp">${shapeSVG(k,15)}</i>`,officeLayers[k]));
 const et=document.getElementById("essToggles");
 toggle(et,"t-hosp","Hospitals",`<i class="sw shp">${iconH(15)}</i>`,hospLayer);
@@ -1283,6 +1353,22 @@ document.getElementById("lineRows").innerHTML=LINES.map(L_=>{
   const label=L_.segs.map(s=>s.st==="op"?"Operational":s.when).filter((v,i,a)=>a.indexOf(v)===i).join(" · ");
   return `<div class="lrow"><i class="sw ln ${cls==="op"?"":cls}" style="border-color:${L_.col}"></i><span>${L_.n}</span><span class="st ${cls}">${label}</span></div>`;}).join("");
 
+/* Company picker */
+(function(){
+  const sel=document.getElementById("coSel");
+  sel.innerHTML=CO_NAMES.map(n=>{const L_=COMPANIES[n];const ok=L_.some(x=>x.v);return `<option value="${n.replace(/"/g,"&quot;")}">${n} (${L_.length} office${L_.length>1?"s":""}${ok?"":", unconfirmed"})</option>`;}).join("");
+  sel.value=MY_NAME;
+  const hint=()=>{const ver=MY.filter(b=>b.v).length;document.getElementById("coHint").textContent=`Shown as YC on the map. Distances, the shortlist table and the pop-up use ${MY_NAME}'s ${MY.length} office${MY.length>1?"s":""}${ver<MY.length?" (some not confirmed on the official site)":""}.`;};
+  hint();
+  sel.addEventListener("change",()=>{
+    MY_NAME=sel.value;MY=COMPANIES[MY_NAME];try{localStorage.setItem("myCompany",MY_NAME);}catch(e){}
+    buildMy();renderCmp();hint();
+    if(lastSpot)setSpot(lastSpot.ll,lastSpot.label,lastSpot.zone,false);
+    if(!modal.hidden&&dmData&&dmData.mode!=="apt"){const f=dmFilter;openDistances(dmData.ll,dmData.label);if(f!=="all"){const c=document.querySelector(`#dmChips [data-f="${f}"]`);if(c)c.click();}}
+    const b=L.latLngBounds(MY.filter(x=>x.city).map(x=>x.ll));if(b.isValid())map.flyToBounds(b.pad(.4),{maxZoom:14,duration:.8});
+  });
+})();
+
 /* Search */
 const q=document.getElementById("q"),qres=document.getElementById("qres");
 q.addEventListener("input",()=>{
@@ -1290,13 +1376,13 @@ q.addEventListener("input",()=>{
   document.querySelectorAll(".hl").forEach(n=>n.classList.remove("hl"));
   if(s.length<2){qres.textContent="Matching offices pulse on the map. Stars mark the high-paying employers.";return;}
   const hits=officeMarkers.filter(({o})=>o.name.toLowerCase().includes(s));
-  const bHits="bosch".startsWith(s)||s.includes("bosch")?boschMarkers:[];
+  const bHits=MY_NAME.toLowerCase().includes(s)||s.includes(MY_NAME.toLowerCase())?myMarkers:[];
   const pts=[...hits.map(h=>h.o.ll),...bHits.map(b=>[b.getLatLng().lat,b.getLatLng().lng])];
   if(!pts.length){qres.textContent="No office in the guide matches that name.";return;}
   hits.forEach(({m})=>{m.setZIndexOffset(3000);const p=m.getElement();if(p)p.classList.add("hl");});
   bHits.forEach(b=>{const e=b.getElement();if(e)e.classList.add("hl");});
   const where=[...new Set(hits.map(h=>h.o.hubName))];
-  qres.textContent=`${pts.length} location${pts.length>1?"s":""}${where.length?": "+where.join("; "):" (Bosch sites)"}`;
+  qres.textContent=`${pts.length} location${pts.length>1?"s":""}${where.length?": "+where.join("; "):` (${MY_NAME}, your company)`}`;
   map.flyToBounds(L.latLngBounds(pts).pad(.3),{maxZoom:14,duration:.8});
 });
 
@@ -1315,7 +1401,7 @@ legend.onAdd=function(){
   const zone=v=>`<span style="display:inline-block;width:13px;height:13px;border-radius:50%;background:var(${v});opacity:.55;border:2px solid var(${v})"></span>`;
   d.innerHTML=`<summary>Legend</summary><div class="lg-body">
     <div class="lg-h">Offices</div>
-    ${row('<span class="sw sq">B</span>',"Bosch site")}
+    ${row('<span class="sw yc">YC</span>',"Your company's office")}
     ${row(shapeSVG("top",18),"Elite / very high pay")}
     ${row(shapeSVG("strong",15),"Strong pay targets")}
     ${row(shapeSVG("startup",13),"Startups, fintech, SaaS")}
