@@ -1,5 +1,9 @@
 source "https://rubygems.org"
 
+# github-pages forces safe mode, so this cannot live in _plugins.
+# Liquid 4.0.3 still calls Object#tainted?, which Ruby 3.2 removed.
+require_relative "ruby_compat"
+
 # Hello! This is where you manage which Jekyll version is used to run.
 # When you want to use a different version, change it below, save the
 # file and run `bundle install`. Run Jekyll with `bundle exec`, like so:
@@ -10,6 +14,11 @@ source "https://rubygems.org"
 # Happy Jekylling!
 
 gem "github-pages", group: :jekyll_plugins
+
+# Removed from Ruby's default gems; Jekyll 3.9 still requires them.
+gem "csv"
+gem "bigdecimal"
+gem "webrick"
 
 # If you want to use Jekyll native, uncomment the line below.
 # To upgrade, run `bundle update`.
