@@ -16,17 +16,38 @@
 
   <div class="author__content">
     <h3 class="author__name">{{ author.name }}</h3>
-    {% if author.bio %}<p class="author__bio">{{ author.bio }}</p>{% endif %}
+    {% if site.data.skills %}
+      <div class="author__skills-groups">
+        {% for group in site.data.skills %}
+          <div class="skill-group">
+            <h4 class="skill-group__title">{{ group.category }}</h4>
+            <ul class="author__skills">
+              {% for skill in group.items %}
+                <li>
+                  {% if skill.logo %}<img src="{{ base_path }}/images/tech/{{ skill.logo }}{% unless skill.logo contains '.' %}.svg{% endunless %}" alt="" width="14" height="14" loading="lazy">{% elsif skill.icon %}<i class="fa {{ skill.icon }}" aria-hidden="true"></i>{% endif %}
+                  {{ skill.name }}
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% endfor %}
+      </div>
+    {% elsif author.bio %}
+      <ul class="author__skills" aria-label="Skills">
+        {% assign skills = author.bio | split: "," %}
+        {% for skill in skills %}<li>{{ skill | strip }}</li>{% endfor %}
+      </ul>
+    {% endif %}
   </div>
 
   <div class="author__urls-wrapper">
     <button class="btn btn--inverse">Follow</button>
     <ul class="author__urls social-icons">
       {% if author.location %}
-        <li><i class="fa fa-fw fa-map-marker" aria-hidden="true"></i> {{ author.location }}</li>
+        <li class="author__meta"><i class="fa fa-fw fa-graduation-cap" aria-hidden="true"></i> {{ author.location }}</li>
       {% endif %}
       {% if author.employer %}
-        <li><i class="fa fa-fw fa-map-marker" aria-hidden="true"></i> {{ author.employer }}</li>
+        <li class="author__meta"><i class="fa fa-fw fa-graduation-cap" aria-hidden="true"></i> {{ author.employer }}</li>
       {% endif %}
       {% if author.uri %}
         <li><a href="{{ author.uri }}"><i class="fa fa-fw fa-chain" aria-hidden="true"></i> {{ site.data.ui-text[site.locale].website_label | default: "Website" }}</a></li>
@@ -110,7 +131,7 @@
         <li><a href="https://en.wikipedia.org/wiki/User:{{ author.wikipedia }}"><i class="fa fa-fw fa-chain" aria-hidden="true"></i> Wikipedia</a></li>
       {% endif %}
       {% if author.kaggle %}
-        <li><a href="{{ author.kaggle }}"><i class="ai fa-map-marker ai-fw"></i> Kaggle</a></li>
+        <li><a href="{{ author.kaggle }}"><i class="fa fa-fw fa-trophy" aria-hidden="true"></i> Kaggle</a></li>
       {% endif %}
     </ul>
   </div>

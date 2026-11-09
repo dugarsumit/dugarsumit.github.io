@@ -1,0 +1,64 @@
+# Skills shown in the profile banner, grouped and in display order.
+# `logo` is a file in /images/tech/ (without .svg); `icon` is a Font Awesome 4 class used when no logo exists.
+
+- category: "AI & Machine Learning"
+  items:
+    - { name: "Transformers", logo: "huggingface" }
+    - { name: "LLMs", icon: "fa-comments" }
+    - { name: "LangGraph", logo: "langgraph" }
+    - { name: "LangFuse", logo: "langfuse" }
+    - { name: "PyTorch", logo: "pytorch" }
+    - { name: "Tensorflow", logo: "tensorflow" }
+    - { name: "LightGBM", logo: "lightgbm" }
+    - { name: "XGBoost", logo: "xgboost.png" }
+
+- category: "MLOps & Model Serving"
+  items:
+    - { name: "Nvidia Triton Server", logo: "nvidia" }
+    - { name: "Tf Serving", logo: "tensorflow" }
+    - { name: "MLflow", logo: "mlflow" }
+    - { name: "Kubeflow", logo: "kubeflow" }
+    - { name: "Airflow", logo: "apacheairflow" }
+
+- category: "Web & APIs"
+  items:
+    - { name: "FastAPI", logo: "fastapi" }
+    - { name: "Flask", logo: "flask" }
+    - { name: "Streamlit", logo: "streamlit" }
+
+- category: "Data & Analytics"
+  items:
+    - { name: "Iceberg", icon: "fa-database" }
+    - { name: "Trino", logo: "trino" }
+    - { name: "DBT", logo: "dbt" }
+    - { name: "Superset", logo: "apachesuperset" }
+
+- category: "Databases & Search"
+  items:
+    - { name: "MongoDB", logo: "mongodb" }
+    - { name: "Elasticsearch", logo: "elasticsearch" }
+    - { name: "MySQL", logo: "mysql" }
+    - { name: "PostgreSQL", logo: "postgresql" }
+
+- category: "Messaging & Streaming"
+  items:
+    - { name: "RabbitMQ", logo: "rabbitmq" }
+    - { name: "Kafka", logo: "apachekafka" }
+
+- category: "Cloud & DevOps"
+  items:
+    - { name: "AWS", logo: "aws" }
+    - { name: "Kubernetes", logo: "kubernetes" }
+    - { name: "Docker", logo: "docker" }
+    - { name: "Jenkins", logo: "jenkins" }
+
+- category: "Monitoring"
+  items:
+    - { name: "Prometheus", logo: "prometheus" }
+    - { name: "Grafana", logo: "grafana" }
+    - { name: "Graylog", logo: "graylog" }
+
+- category: "Languages"
+  items:
+    - { name: "Python", logo: "python" }
+    - { name: "Java", logo: "java" }

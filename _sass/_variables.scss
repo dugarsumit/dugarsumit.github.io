@@ -28,8 +28,8 @@ $bodoni                     : "Bodoni MT", serif;
 $calisto                    : "Calisto MT", serif;
 $garamond                   : Garamond, serif;
 
-$global-font-family         : $sans-serif;
-$header-font-family         : $sans-serif;
+$global-font-family         : "Inter", $sans-serif;
+$header-font-family         : "Plus Jakarta Sans", "Inter", $sans-serif;
 $caption-font-family        : $serif;
 
 /* type scale */
@@ -54,13 +54,30 @@ $light-gray                 : mix(#fff, $gray, 50%);
 $lighter-gray               : mix(#fff, $gray, 90%);
 
 $body-color                 : #fff;
-$background-color           : #fff;
+$background-color           : #f7f6fb;
 $code-background-color      : #fafafa;
 $code-background-color-dark : $light-gray;
-$text-color                 : $dark-gray;
-$border-color               : $lighter-gray;
+$text-color                 : #3b3f51;
+$border-color               : #ebe8f4;
 
-$primary-color              : #7a8288;
+/* pastel palette */
+$ink                        : #2a2d3e;
+$muted                      : #727689;
+$lavender                   : #ece8ff;
+$lavender-strong            : #cfc6fb;
+$mint                       : #e2f5ec;
+$mint-strong                : #b7e4cf;
+$peach                      : #ffece2;
+$peach-strong               : #fccbb2;
+$sky                        : #e3f0ff;
+$sky-strong                 : #bcd8fb;
+$butter                     : #fff5d9;
+$butter-strong              : #f6dd98;
+$card-shadow                : 0 1px 2px rgba(42, 45, 62, 0.04), 0 8px 24px rgba(42, 45, 62, 0.06);
+$card-shadow-hover          : 0 2px 4px rgba(42, 45, 62, 0.05), 0 14px 32px rgba(42, 45, 62, 0.10);
+$card-radius                : 16px;
+
+$primary-color              : #6a61c9;
 $success-color              : #62c462;
 $warning-color              : #f89406;
 $danger-color               : #ee5f5b;
@@ -90,11 +107,11 @@ $xing-color                 : #006567;
 
 
 /* links */
-$link-color                 : $info-color;
+$link-color                 : #5b53bd;
 $link-color-hover           : mix(#000, $link-color, 25%);
-$link-color-visited         : mix(#fff, $link-color, 25%);
-$masthead-link-color        : $primary-color;
-$masthead-link-color-hover  : mix(#000, $primary-color, 25%);
+$link-color-visited         : $link-color;
+$masthead-link-color        : $muted;
+$masthead-link-color-hover  : $ink;
 
 
 /*
@@ -146,7 +163,7 @@ $susy: (
    Other
    ========================================================================== */
 
-$border-radius              : 4px;
+$border-radius              : 10px;
 $box-shadow                 : 0 1px 1px rgba(0, 0, 0, 0.125);
 $navicon-width              : 28px;
 $navicon-height             : 4px;
