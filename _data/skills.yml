@@ -7,6 +7,9 @@
     - { name: "LLMs", icon: "fa-comments" }
     - { name: "LangGraph", logo: "langgraph" }
     - { name: "LangFuse", logo: "langfuse" }
+    - { name: "Pydantic AI", logo: "pydantic" }
+    - { name: "FastMCP", logo: "mcp" }
+    - { name: "Nao", icon: "fa-commenting" }
     - { name: "PyTorch", logo: "pytorch" }
     - { name: "Tensorflow", logo: "tensorflow" }
     - { name: "LightGBM", logo: "lightgbm" }
@@ -19,12 +22,8 @@
     - { name: "MLflow", logo: "mlflow" }
     - { name: "Kubeflow", logo: "kubeflow" }
     - { name: "Airflow", logo: "apacheairflow" }
-
-- category: "Web & APIs"
-  items:
-    - { name: "FastAPI", logo: "fastapi" }
-    - { name: "Flask", logo: "flask" }
-    - { name: "Streamlit", logo: "streamlit" }
+    - { name: "SHAP", icon: "fa-bar-chart" }
+    - { name: "Evidently", icon: "fa-line-chart" }
 
 - category: "Data & Analytics"
   items:
@@ -33,12 +32,24 @@
     - { name: "DBT", logo: "dbt" }
     - { name: "Superset", logo: "apachesuperset" }
 
+- category: "Web & APIs"
+  items:
+    - { name: "FastAPI", logo: "fastapi" }
+    - { name: "Flask", logo: "flask" }
+    - { name: "Streamlit", logo: "streamlit" }
+    - { name: "gRPC", icon: "fa-exchange" }
+    - { name: "Spring", logo: "spring" }
+    - { name: "Hibernate", logo: "hibernate" }
+
 - category: "Databases & Search"
   items:
     - { name: "MongoDB", logo: "mongodb" }
     - { name: "Elasticsearch", logo: "elasticsearch" }
     - { name: "MySQL", logo: "mysql" }
     - { name: "PostgreSQL", logo: "postgresql" }
+    - { name: "LanceDB", icon: "fa-database" }
+    - { name: "FAISS", icon: "fa-search" }
+    - { name: "Apache Solr", logo: "apachesolr" }
 
 - category: "Messaging & Streaming"
   items:
@@ -51,6 +62,8 @@
     - { name: "Kubernetes", logo: "kubernetes" }
     - { name: "Docker", logo: "docker" }
     - { name: "Jenkins", logo: "jenkins" }
+    - { name: "SonarQube", logo: "sonarqube" }
+    - { name: "pre-commit", logo: "precommit" }
 
 - category: "Monitoring"
   items:
@@ -62,3 +75,4 @@
   items:
     - { name: "Python", logo: "python" }
     - { name: "Java", logo: "java" }
+    - { name: "Go", logo: "go" }

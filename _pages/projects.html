@@ -7,6 +7,4 @@ author_profile: true
 
 {% include base_path %}
 
-{% for post in site.projects reversed %}
-  {% include archive-single-talk.html %}
-{% endfor %}
+{% include archive-bento.html items=site.projects noun="project" label="Project" icon="fa-flask" %}

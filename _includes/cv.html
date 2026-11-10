@@ -1,0 +1,41 @@
+{% comment %}
+  About page layout. All content lives in _data/cv.yml; behaviour in assets/js/enhance.js.
+{% endcomment %}
+{% include base_path %}
+{% assign cv = site.data.cv %}
+{% assign years = cv.years | append: "" %}
+
+<div class="cv">
+  <p class="cv-lead">{{ cv.summary | replace: "%years%", years | markdownify | remove: "<p>" | remove: "</p>" | strip }}</p>
+
+  <section class="journey" hidden data-labels="{{ cv.labels | jsonify | xml_escape }}">
+    <div class="journey__head">
+      <h1><span class="journey__head-icon"><i class="fa fa-th-large" aria-hidden="true"></i></span>{{ cv.headings.glance }}</h1>
+    </div>
+    <p class="journey__hint">{{ cv.headings.glance_hint }}</p>
+    <div class="bento"></div>
+    <div class="journey__stats" hidden>
+      {% for stat in cv.stats %}
+        <div class="bento__tile bento__tile--stat bento__tile--{% cycle 'a', 'b' %}">
+          <span class="bento__stat-value">{{ stat.value | replace: "%years%", years }}</span>
+          <span class="bento__stat-label">{{ stat.label | replace: "%years%", years }}</span>
+        </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  {% assign sections = "experience:office,education:university,volunteering:volunteer" | split: "," %}
+  {% for pair in sections %}
+    {% assign key = pair | split: ":" | first %}
+    {% assign icon = pair | split: ":" | last %}
+    {% assign entries = cv[key] %}
+    {% if entries and entries.size > 0 %}
+      <section class="cv-section tone-{{ forloop.index0 }}"{% unless key == "volunteering" %} data-journey{% endunless %}>
+        <h1><img src="{{ base_path }}/images/{{ icon }}-icon16x16.png" alt="">{{ cv.headings[key] }}</h1>
+        {% for entry in entries %}
+          {% include cv-entry.html entry=entry section=key %}
+        {% endfor %}
+      </section>
+    {% endif %}
+  {% endfor %}
+</div>

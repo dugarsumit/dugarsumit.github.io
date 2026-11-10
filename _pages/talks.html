@@ -11,6 +11,4 @@ author_profile: true
 
 {% endif %}
 
-{% for post in site.talks reversed %}
-  {% include archive-single-talk.html %}
-{% endfor %}
+{% include archive-bento.html items=site.talks noun="talk" label="Talk" icon="fa-microphone" %}

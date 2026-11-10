@@ -1,0 +1,3 @@
+{% comment %}
+  Looks up `include.name` in _data/orgs.yml and assigns the match to `org` (or nil).
+{% endcomment %}{% assign org = nil %}{% assign org_key = include.name | downcase | remove: "-" %}{% for candidate in site.data.orgs %}{% assign match_key = candidate.match | downcase | remove: "-" %}{% if org_key contains match_key %}{% assign org = candidate %}{% endif %}{% endfor %}

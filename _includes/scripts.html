@@ -1,5 +1,4 @@
 <script src="{{ base_path }}/assets/js/main.min.js"></script>
-<script>window.JOURNEY = { base: {{ base_path | jsonify }}, logos: {{ site.data.journey.logos | jsonify }} };</script>
 <script src="{{ base_path }}/assets/js/enhance.js?v={{ site.time | date: '%s' }}"></script>
 
 {% include analytics.html %}

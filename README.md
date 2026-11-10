@@ -1,3 +1,22 @@
+# Updating this site
+
+Content and design are kept apart; each piece of content lives in exactly one place.
+
+| What | Where |
+| --- | --- |
+| Summary, stats, experience, education (About page and profile header) | `_data/cv.yml` |
+| Skills shown in the profile header | `_data/skills.yml` (logos in `images/tech/`) |
+| Organisation logos and About-page tile sizes | `_data/orgs.yml` (logos in `images/orgs/`) |
+| Projects, publications, talks | one Markdown file each in `_projects/`, `_publications/`, `_talks/` |
+| Name, avatar, social links | `author:` in `_config.yml` (restart `jekyll serve` after editing) |
+| Navigation | `_data/navigation.yml` |
+
+Design only: `_includes/cv.html`, `_includes/cv-entry.html`, `_includes/archive-bento.html` (markup),
+`_sass/_modern.scss` (styles) and `assets/js/enhance.js` (grid, timeline and popups on the About page).
+Retired content is kept as comments in the same files (e.g. previous experience and voluntary work in `_data/cv.yml`).
+
+---
+
 A Github Pages template for academic websites. This was forked (then detached) by [Stuart Geiger](https://github.com/staeiou) from the [Minimal Mistakes Jekyll Theme](https://mmistakes.github.io/minimal-mistakes/), which is © 2016 Michael Rose and released under the MIT License. See LICENSE.md.
 
 I think I've got things running smoothly and fixed some major bugs, but feel free to file issues or make pull requests if you want to improve the generic template / theme.

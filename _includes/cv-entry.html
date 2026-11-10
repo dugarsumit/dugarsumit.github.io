@@ -1,0 +1,75 @@
+{% comment %}
+  One experience / education card. Content comes from _data/cv.yml; the data-* attributes
+  are what assets/js/enhance.js reads to build the grid, timeline and popups.
+{% endcomment %}
+{% include base_path %}
+{% assign entry = include.entry %}
+{% assign labels = site.data.cv.labels %}
+{% assign icons = base_path | append: "/images/" %}
+{% include find-org.html name=entry.org %}
+
+{% if include.section == "education" %}
+  {% assign kind = "education" %}
+  {% assign type = labels.education %}
+{% else %}
+  {% assign type_key = entry.type | downcase %}
+  {% if include.section == "experience" and type_key contains "student" %}{% assign kind = "student" %}{% else %}{% assign kind = "job" %}{% endif %}
+  {% assign type = entry.type %}
+{% endif %}
+
+<div class="cv-entry{% if kind == 'student' %} cv-entry--student{% endif %}"
+  data-kind="{{ kind }}"
+  data-type="{{ type | xml_escape }}"
+  data-title="{{ entry.title | xml_escape }}"
+  data-org="{{ entry.org | xml_escape }}"
+  data-from="{{ entry.from }}"
+  data-to="{{ entry.to }}"
+  data-location="{{ entry.location | xml_escape }}"
+  data-domain="{{ entry.domain | xml_escape }}"
+  {% if org %}data-logo="{{ base_path }}/images/orgs/{{ org.logo }}" data-logo-fit="{{ org.fit }}" data-tile="{{ org.tile }}"{% endif %}>
+  <div class="cv-entry__when"><span>{{ entry.from }}</span><span>{{ entry.to }}</span></div>
+
+  {% if kind == "education" %}
+    <h2>{{ entry.title }}</h2>
+    <h6>
+      <span class="cv-chip"><img src="{{ icons }}university-icon16x16.png" alt="">{{ entry.org }}</span>
+      {% if entry.location %}<span class="cv-chip"><img src="{{ icons }}location-icon16x16.png" alt="">{{ entry.location }}</span>{% endif %}
+      {% if entry.grade %}<span class="cv-chip"><img src="{{ icons }}tick-icon16x16.png" alt="">{{ entry.grade }}</span>{% endif %}
+    </h6>
+  {% else %}
+    <h2>{{ entry.title }} @ <em>{{ entry.org }}</em></h2>
+    <h6>
+      <span class="cv-chip"><img src="{{ icons }}office-icon16x16.png" alt="">{{ entry.type }}</span>
+      {% if entry.location %}<span class="cv-chip"><img src="{{ icons }}location-icon16x16.png" alt="">{{ entry.location }}</span>{% endif %}
+      {% if entry.domain %}<span class="cv-chip"><img src="{{ icons }}project-icon16x16.png" alt="">{{ entry.domain }}</span>{% endif %}
+    </h6>
+  {% endif %}
+
+  {% if entry.groups %}
+    <ul>
+      {% for group in entry.groups %}
+        <li class="cv-group"><strong>{{ group.heading }}</strong>
+          <ul>
+            {% for point in group.points %}<li>{{ point | markdownify | remove: "<p>" | remove: "</p>" | strip }}</li>{% endfor %}
+          </ul>
+        </li>
+      {% endfor %}
+    </ul>
+  {% elsif entry.points %}
+    <ul>
+      {% for point in entry.points %}<li>{{ point | markdownify | remove: "<p>" | remove: "</p>" | strip }}</li>{% endfor %}
+    </ul>
+  {% endif %}
+
+  {% if entry.courses %}
+    <p><strong>{{ labels.courses }}</strong> – {{ entry.courses | markdownify | remove: "<p>" | remove: "</p>" | strip }}</p>
+  {% endif %}
+
+  {% if entry.thesis %}
+    {% assign thesis = site.projects | where: "url", entry.thesis | first %}
+    {% if thesis %}
+      <p><strong>{{ thesis.type }}</strong> – <strong><a href="{{ base_path }}{{ thesis.url }}">{{ thesis.title }}</a></strong>
+        ({{ thesis.date | date: "%Y" }}). {{ thesis.excerpt | strip_html | strip }}</p>
+    {% endif %}
+  {% endif %}
+</div>

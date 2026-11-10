@@ -1,4 +1,3 @@
-<!--
 ---
 title: "An overview of Lakehouse Architecture"
 collection: talks
@@ -8,6 +7,8 @@ venue: "Check24"
 date: 2024-10-19
 location: "Munich, Germany"
 ---
+
+Presented the DBT, Trino, Iceberg data lakehouse architecture that we implemented at Check24 to 200+ data scientists and engineers at the Check24 Data Science Summit, showcasing the platform's impact and best practices.
 
 The presentation explains the transition from traditional SQL-based data warehouses to a lakehouse architecture, highlighting the roles of DBT, Trino, and Apache Iceberg in building a modern data platform.
 
@@ -26,5 +27,4 @@ Technology Choices (Rationale)
 
 ![](https://dugarsumit.github.io/images/lakehouse.png)
 
-[For more details read this report](https://dugarsumit.github.io/files/lakehouse_architecture.pdf)
--->
+[For more details read this report](https://dugarsumit.github.io/files/lakehouse.pdf)

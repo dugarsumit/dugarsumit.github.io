@@ -1,0 +1,79 @@
+{% include base_path %}
+{% assign items = include.items | reverse %}
+{% assign oldest = include.items | first %}
+{% assign newest = include.items | last %}
+
+<div class="bento bento--archive">
+  {% for post in items %}
+    {% if post.id %}
+      {% assign title = post.title | markdownify | remove: "<p>" | remove: "</p>" | strip %}
+    {% else %}
+      {% assign title = post.title %}
+    {% endif %}
+
+    {% include find-org.html name=post.venue %}
+    {% assign logo = org %}
+
+    {% if post.collection == 'publications' %}
+      {% assign tone = 'pub' %}
+    {% elsif post.venue contains 'University' %}
+      {% assign tone = 'education' %}
+    {% elsif logo %}
+      {% assign tone = 'job' %}
+    {% else %}
+      {% assign tone = 'event' %}
+    {% endif %}
+
+    {% if forloop.first %}
+      {% assign size = 'wide' %}
+      {% assign words = 55 %}
+    {% else %}
+      {% assign size = 's' %}
+      {% assign words = 26 %}
+    {% endif %}
+
+    <article class="bento__tile bento__tile--{{ tone }} bento__tile--{{ size }}">
+      <span class="bento__top">
+        {% if logo %}
+          <img class="bento__logo{% if logo.fit == 'cover' %} bento__logo--cover{% endif %}" src="{{ base_path }}/images/orgs/{{ logo.logo }}" alt="">
+        {% else %}
+          <span class="bento__logo bento__logo--icon"><i class="fa {{ include.icon }}" aria-hidden="true"></i></span>
+        {% endif %}
+        <span class="bento__kind">{{ post.type | default: include.label }}</span>
+        {% if forloop.first %}<span class="bento__now bento__now--latest">Latest</span>{% elsif post.ongoing %}<span class="bento__now">Ongoing</span>{% endif %}
+      </span>
+
+      <h2 class="bento__title">
+        <a class="bento__link" href="{{ base_path }}{{ post.url }}" rel="permalink">{{ title }}</a>
+      </h2>
+      {% if post.venue %}<span class="bento__org">{{ post.venue }}</span>{% endif %}
+
+      {% if post.excerpt %}
+        <p class="bento__excerpt">{{ post.excerpt | markdownify | strip_html | truncatewords: words }}</p>
+      {% endif %}
+
+      <span class="bento__foot">
+        <span class="bento__when">
+          {{ post.date | date: '%b %Y' }}{% if post.ongoing %} – Present{% endif %}{% if post.location %} · {{ post.location | split: ',' | first }}{% endif %}
+        </span>
+        {% if post.paperurl %}
+          <a class="bento__action" href="{{ post.paperurl }}"><i class="fa fa-file-pdf-o" aria-hidden="true"></i> Paper</a>
+        {% else %}
+          <a class="bento__action" href="{{ base_path }}{{ post.url }}">Read <i class="fa fa-arrow-right" aria-hidden="true"></i></a>
+        {% endif %}
+      </span>
+    </article>
+
+    {% if forloop.first %}
+      <div class="bento__tile bento__tile--stat bento__tile--a">
+        <span class="bento__stat-value">{{ include.items.size }}</span>
+        <span class="bento__stat-label">
+          {{ include.noun }}{% if include.items.size != 1 %}s{% endif %}
+          {% assign from_year = oldest.date | date: '%Y' %}
+          {% assign to_year = newest.date | date: '%Y' %}
+          · {% if from_year == to_year %}{{ from_year }}{% else %}{{ from_year }} – {{ to_year }}{% endif %}
+        </span>
+      </div>
+    {% endif %}
+  {% endfor %}
+</div>

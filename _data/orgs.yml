@@ -1,0 +1,17 @@
+# Organisation logos, shared by the About page (cards, grid, popups) and the
+# Projects / Publications / Talks pages (matched against each item's `venue`).
+#
+# `match`: text looked for in the organisation or venue name (case- and hyphen-insensitive).
+# `logo`:  file name in /images/orgs/.
+# `fit: cover`: the logo fills its whole box (for logos that already have a coloured background).
+# `tile`:  size of this organisation's tile in the About-page grid: `xl` (2x2) or `wide` (2x1).
+#          Anything else is a small 1x1 tile; the newest job is `xl` by default.
+
+- { match: "Delhi Technological University", logo: "dtu.png" }
+- { match: "Snapdeal", logo: "snapdeal.png", fit: "cover" }
+- { match: "Lybrate", logo: "lybrate.png" }
+- { match: "Technical University of Munich", logo: "tum.svg", tile: "wide" }
+- { match: "SimScale", logo: "simscale.png" }
+- { match: "Kaia", logo: "kaia.png" }
+- { match: "e-bot7", logo: "ebot7.png", tile: "wide" }
+- { match: "Check24", logo: "check24.png", tile: "xl" }

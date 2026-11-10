@@ -1,3 +1,8 @@
+/*
+  About page behaviour: durations, the "Career at a glance" grid, the proportional timeline
+  and the detail popup. The markup and all text come from _includes/cv.html (fed by _data/cv.yml);
+  this script only reads the data-* attributes on each .cv-entry.
+*/
 (function () {
   var MONTHS = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
 
@@ -25,144 +30,48 @@
     return out.join(' ');
   }
 
-  var content = document.querySelector('.page__content');
-  if (!content || !content.querySelector(':scope > h1')) return;
+  var cv = document.querySelector('.cv');
+  if (!cv) return;
 
-  var nodes = Array.prototype.slice.call(content.children);
-  var section = null;
-  var entry = null;
-  var tone = 0;
-
-  nodes.forEach(function (node) {
-    var tag = node.tagName;
-
-    if (tag === 'H1') {
-      section = document.createElement('section');
-      section.className = 'cv-section tone-' + (tone++ % 5);
-      content.insertBefore(section, node);
-      section.appendChild(node);
-      entry = null;
-      return;
-    }
-
-    if (!section) {
-      if (tag === 'P') node.classList.add('cv-lead');
-      return;
-    }
-
-    if (tag === 'H2') {
-      entry = document.createElement('div');
-      entry.className = 'cv-entry';
-      section.appendChild(entry);
-    }
-
-    (entry || section).appendChild(node);
+  cv.querySelectorAll('.cv-entry').forEach(function (entry) {
+    var duration = formatDuration(entry.getAttribute('data-from'), entry.getAttribute('data-to'));
+    if (!duration) return;
+    var small = document.createElement('small');
+    small.textContent = duration;
+    entry.querySelector('.cv-entry__when').appendChild(small);
   });
 
-  content.querySelectorAll('.cv-entry li').forEach(function (li) {
-    var first = li.firstElementChild;
-    if (first && first.tagName === 'STRONG' && li.querySelector(':scope > ul') &&
-        li.firstChild.textContent.trim() === first.textContent.trim()) {
-      li.classList.add('cv-group');
-    }
-  });
+  buildJourney(cv);
 
-  content.querySelectorAll('.cv-entry > h6').forEach(function (h6) {
-    var entry = h6.parentNode;
-    if (/work(ing)?\s+student/i.test(h6.textContent)) entry.classList.add('cv-entry--student');
-    var parts = h6.innerHTML
-      .split('|')
-      .map(function (part) { return part.trim(); })
-      .filter(Boolean);
+  function buildJourney(cv) {
+    var section = cv.querySelector('.journey');
+    if (!section || typeof window.HTMLDialogElement !== 'function') return;
 
-    var dateIndex = parts.findIndex(function (part) { return part.indexOf('calendar-icon') !== -1; });
-    if (dateIndex !== -1) {
-      var holder = document.createElement('div');
-      holder.innerHTML = parts.splice(dateIndex, 1)[0];
-      var range = holder.textContent.trim().split(/\s*[–—]\s*|\s+-+\s+/);
+    var labels = JSON.parse(section.getAttribute('data-labels') || '{}');
+    var ICONS = { job: 'fa-briefcase', student: 'fa-laptop', education: 'fa-graduation-cap' };
 
-      var when = document.createElement('div');
-      when.className = 'cv-entry__when';
-      range.forEach(function (text) {
-        var span = document.createElement('span');
-        span.textContent = text;
-        when.appendChild(span);
-      });
-      var duration = formatDuration(range[0], range[1]);
-      if (duration) {
-        var small = document.createElement('small');
-        small.textContent = duration;
-        when.appendChild(small);
-      }
-      entry.insertBefore(when, entry.firstChild);
-    }
-
-    h6.innerHTML = parts
-      .map(function (part) { return '<span class="cv-chip">' + part + '</span>'; })
-      .join('');
-  });
-
-  buildJourney(content);
-
-  function buildJourney(content) {
-    if (typeof window.HTMLDialogElement !== 'function') return;
-
-    var sections = Array.prototype.slice.call(content.querySelectorAll('.cv-section')).filter(function (section) {
-      var h1 = section.querySelector(':scope > h1');
-      return h1 && /experience|education/i.test(h1.textContent);
-    });
-    if (!sections.length) return;
-
-    var KIND = {
-      job: { icon: 'fa-briefcase', label: 'Full-time role' },
-      student: { icon: 'fa-laptop', label: 'Working student' },
-      education: { icon: 'fa-graduation-cap', label: 'Education' }
-    };
-    var STEP_MS = 650;
-    var FLIGHT_MS = 2600;
-    var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    var stops = [];
-    sections.forEach(function (section) {
-      var isEducation = /education/i.test(section.querySelector(':scope > h1').textContent);
-      section.querySelectorAll(':scope > .cv-entry').forEach(function (entry) {
-        var h2 = entry.querySelector(':scope > h2');
-        if (!h2) return;
-        var when = entry.querySelector('.cv-entry__when');
-        var spans = when ? when.querySelectorAll('span') : [];
-        var chips = Array.prototype.slice.call(entry.querySelectorAll('.cv-chip'));
-        var chipWith = function (icon) {
-          return chips.filter(function (chip) { return chip.querySelector('img[src*="' + icon + '"]'); })[0];
-        };
-        var placeChip = chipWith('location-icon');
-        var orgChip = chipWith('university-icon');
-        var em = h2.querySelector('em');
-        stops.push({
-          entry: entry,
-          kind: isEducation ? 'education' : entry.classList.contains('cv-entry--student') ? 'student' : 'job',
-          title: h2.textContent.split('@')[0].trim(),
-          org: em ? em.textContent.trim() : orgChip ? orgChip.textContent.trim() : '',
-          from: spans[0] ? spans[0].textContent.trim() : '',
-          to: spans[1] ? spans[1].textContent.trim() : '',
-          duration: when && when.querySelector('small') ? when.querySelector('small').textContent : '',
-          place: placeChip ? placeChip.textContent.trim() : '',
-          start: spans[0] ? parseMonth(spans[0].textContent) : null,
-          end: spans[1] ? parseMonth(spans[1].textContent) : null
-        });
-      });
+    var stops = Array.prototype.map.call(cv.querySelectorAll('.cv-section[data-journey] > .cv-entry'), function (entry) {
+      var data = function (name) { return entry.getAttribute('data-' + name) || ''; };
+      var place = data('location');
+      var duration = entry.querySelector('.cv-entry__when small');
+      return {
+        entry: entry,
+        kind: data('kind'),
+        label: data('type'),
+        title: data('title'),
+        org: data('org'),
+        from: data('from'),
+        to: data('to'),
+        duration: duration ? duration.textContent : '',
+        domain: data('domain'),
+        logo: data('logo') ? { src: data('logo'), fit: data('logo-fit'), size: data('tile') } : null,
+        city: place.split(',')[0].trim(),
+        country: place.split(',').pop().trim(),
+        start: parseMonth(data('from')),
+        end: parseMonth(data('to'))
+      };
     });
     if (stops.length < 2) return;
-
-    var places = stops.map(function (stop) { return stop.place; }).filter(function (place, i, all) {
-      return place && all.indexOf(place) === i;
-    });
-    stops.forEach(function (stop) {
-      if (stop.place) return;
-      var text = stop.entry.textContent;
-      stop.place = places.filter(function (place) {
-        return place.split(/[\s,]+/).some(function (word) { return word.length > 3 && text.indexOf(word) !== -1; });
-      })[0] || '';
-    });
 
     stops.sort(function (a, b) { return (a.start || 0) - (b.start || 0); });
 
@@ -174,37 +83,160 @@
       })[0] || null;
     });
 
-    var groups = [];
-    stops.forEach(function (stop, i) {
-      var country = stop.place.split(',').pop().trim();
-      var group = groups[groups.length - 1];
-      if (!group || group.country !== country) {
-        group = { country: country, city: stop.place.split(',')[0].trim(), stops: [] };
-        groups.push(group);
+    var order = stops.slice().reverse();
+    order.forEach(function (stop, i) { stop.index = i; });
+
+    section.hidden = false;
+    cv.querySelectorAll('.cv-section[data-journey]').forEach(function (s) { s.style.display = 'none'; });
+    var grid = section.querySelector('.bento');
+
+    function degree(edu) {
+      return edu.title.split(' ')[0] + "'s";
+    }
+
+    function shortDate(text) {
+      if (/present/i.test(text)) return 'Present';
+      var match = /([a-z]+)\.?\s+(\d{4})/i.exec(text);
+      return match ? match[1].slice(0, 3) + ' ' + match[2] : text;
+    }
+
+    function highlights(stop, count) {
+      var items = Array.prototype.filter.call(stop.entry.querySelectorAll('li'), function (li) {
+        return !li.querySelector('ul');
+      });
+      if (!items.length) {
+        var paragraphs = Array.prototype.slice.call(stop.entry.querySelectorAll(':scope > p'));
+        items = paragraphs.filter(function (p) { return p.querySelector('strong + strong'); });
+        if (!items.length) items = paragraphs;
       }
-      stop.index = i;
-      stop.group = groups.length - 1;
-      group.stops.push(stop);
-    });
+      return items.slice(0, count).map(function (item) { return item.innerHTML; });
+    }
 
-    var section = document.createElement('section');
-    section.className = 'journey';
-    section.innerHTML =
-      '<div class="journey__head">' +
-        '<h1><span class="journey__head-icon"><i class="fa fa-map-o" aria-hidden="true"></i></span>Journey</h1>' +
-        '<button type="button" class="journey__replay"><i class="fa fa-repeat" aria-hidden="true"></i> Replay</button>' +
-      '</div>' +
-      '<p class="journey__hint">Click any spot on the board to open the details.</p>' +
-      '<div class="journey__board"></div>';
-    sections[0].parentNode.insertBefore(section, sections[0]);
-    sections.forEach(function (s) { s.style.display = 'none'; });
+    function stopTile(stop, forcedSize) {
+      var size = forcedSize || (stop.logo && stop.logo.size ? stop.logo.size : stop.index === 0 ? 'xl' : 's');
+      var picks = size === 'xl' ? highlights(stop, 3) : size === 'wide' || size === 'main' ? highlights(stop, 1) : [];
+      var tile = document.createElement('button');
+      tile.type = 'button';
+      tile.className = 'bento__tile bento__tile--' + stop.kind + ' bento__tile--' + size;
+      tile.setAttribute('aria-label', stop.title + (stop.org ? ' at ' + stop.org : '') + ', ' + stop.from + ' to ' + stop.to);
+      tile.innerHTML =
+        '<span class="bento__top">' +
+          (stop.logo ?
+            '<img class="bento__logo' + (stop.logo.fit === 'cover' ? ' bento__logo--cover' : '') + '" src="' + stop.logo.src + '" alt="">' :
+            '<span class="bento__logo bento__logo--icon"><i class="fa ' + ICONS[stop.kind] + '" aria-hidden="true"></i></span>') +
+          '<span class="bento__kind">' + stop.label + '</span>' +
+          (/present/i.test(stop.to) ? '<span class="bento__now">' + labels.now + '</span>' : '') +
+        '</span>' +
+        '<span class="bento__title">' + stop.title + '</span>' +
+        '<span class="bento__org">' + stop.org + (stop.domain ? '<span class="bento__domain"> · ' + stop.domain + '</span>' : '') + '</span>' +
+        (picks.length ? '<span class="bento__highlights">' + picks.map(function (html) {
+          return '<span class="bento__highlight">' + html + '</span>';
+        }).join('') + '</span>' : '') +
+        '<span class="bento__foot">' +
+          '<span class="bento__when">' + shortDate(stop.from) + ' – ' + shortDate(stop.to) + (stop.city ? ' · ' + stop.city : '') + '</span>' +
+          (stop.duration ? '<span class="bento__duration"><i class="fa fa-hourglass-half" aria-hidden="true"></i> ' + stop.duration + '</span>' : '') +
+        '</span>';
+      tile.addEventListener('click', function () { open(stop); });
+      return tile;
+    }
 
-    var board = section.querySelector('.journey__board');
-    var config = window.JOURNEY || {};
-    stops.forEach(function (stop) {
-      var text = stop.org + ' ' + stop.title;
-      stop.logo = (config.logos || []).filter(function (logo) { return text.indexOf(logo.match) !== -1; })[0] || null;
+    function groupTile(edu, members) {
+      var group = document.createElement('div');
+      group.className = 'bento__tile bento__tile--education bento__group';
+      var main = stopTile(edu, 'main');
+      main.className = 'bento__group-main';
+      group.appendChild(main);
+      var subs = document.createElement('div');
+      subs.className = 'bento__subs';
+      subs.innerHTML = '<span class="bento__subs-label"><i class="fa ' + ICONS.student + '" aria-hidden="true"></i> ' +
+        labels.student_group.replace('%degree%', degree(edu)) + '</span>';
+      members.forEach(function (member) { subs.appendChild(stopTile(member, 's')); });
+      group.appendChild(subs);
+      return group;
+    }
+
+    function moveTile(from, to) {
+      var route = 'M6 44 Q70 -6 134 44';
+      var tile = document.createElement('div');
+      tile.className = 'bento__tile bento__tile--move';
+      tile.innerHTML =
+        '<span class="bento__kind"><i class="fa fa-plane" aria-hidden="true"></i> ' + labels.relocated + '</span>' +
+        '<span class="bento__route">' +
+          '<svg viewBox="0 0 140 50" aria-hidden="true"><path d="' + route + '"/></svg>' +
+          '<span class="bento__plane" style="offset-path: path(\'' + route + '\')">' +
+            '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" transform="rotate(90 12 12)" d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg>' +
+          '</span>' +
+        '</span>' +
+        '<span class="bento__cities"><span>' + from.city + '</span><span>' + to.city + '</span></span>' +
+        '<span class="bento__when">' + to.from + '</span>';
+      return tile;
+    }
+
+    var stats = section.querySelector('.journey__stats');
+    order.forEach(function (stop, i) {
+      var newer = order[i - 1];
+      if (newer && newer.country && stop.country && newer.country !== stop.country) grid.appendChild(moveTile(stop, newer));
+      if (stop.during) return;
+      var members = order.filter(function (other) { return other.during === stop; });
+      grid.appendChild(members.length ? groupTile(stop, members) : stopTile(stop));
+      if (i === 0 && stats) {
+        while (stats.firstElementChild) grid.appendChild(stats.firstElementChild);
+      }
     });
+    if (stats) stats.remove();
+
+    section.parentNode.insertBefore(timeline(), section);
+
+    function shortName(stop) {
+      if (/university/i.test(stop.org)) return stop.org.replace(/\(.*\)/, '').match(/\b[A-Z]/g).join('');
+      return stop.org.split(' ')[0];
+    }
+
+    function timeline() {
+      var dated = stops.filter(function (stop) { return stop.start !== null && stop.end !== null; });
+      var min = Math.min.apply(null, dated.map(function (stop) { return stop.start; }));
+      var max = Math.max.apply(null, dated.map(function (stop) { return stop.end; })) + 1;
+      var pct = function (month) { return ((month - min) / (max - min) * 100).toFixed(2) + '%'; };
+
+      var strip = document.createElement('div');
+      strip.className = 'timeline';
+      strip.setAttribute('aria-label', 'Career timeline');
+      var lanes = { main: document.createElement('div'), student: document.createElement('div') };
+      lanes.student.className = 'timeline__lane timeline__lane--student';
+      lanes.main.className = 'timeline__lane';
+
+      var shades = {};
+      dated.forEach(function (stop, i) {
+        var shade = shades[stop.kind] = (shades[stop.kind] === undefined ? 0 : shades[stop.kind] + 1);
+        var seg = document.createElement('button');
+        seg.type = 'button';
+        seg.className = 'timeline__seg timeline__seg--' + stop.kind + ' timeline__seg--shade-' + (shade % 4) +
+          (i % 2 ? ' timeline__seg--alt' : '');
+        seg.style.left = pct(stop.start);
+        seg.style.width = pct(min + stop.end + 1 - stop.start);
+        seg.title = stop.title + (stop.org ? ' · ' + stop.org : '') + ' · ' + shortDate(stop.from) + ' – ' + shortDate(stop.to) +
+          (stop.duration ? ' (' + stop.duration + ')' : '');
+        seg.setAttribute('aria-label', seg.title);
+        seg.innerHTML = '<span class="timeline__label">' + shortName(stop) + '</span>';
+        seg.addEventListener('click', function () { open(stop); });
+        lanes[stop.kind === 'student' ? 'student' : 'main'].appendChild(seg);
+      });
+
+      var axis = document.createElement('div');
+      axis.className = 'timeline__axis';
+      for (var year = Math.ceil(min / 12); year * 12 < max; year++) {
+        if (year % 2) continue;
+        var tick = document.createElement('span');
+        tick.style.left = pct(year * 12);
+        tick.textContent = year;
+        axis.appendChild(tick);
+      }
+
+      strip.appendChild(lanes.student);
+      strip.appendChild(lanes.main);
+      strip.appendChild(axis);
+      return strip;
+    }
 
     var modal = document.createElement('dialog');
     modal.className = 'journey-modal';
@@ -214,245 +246,20 @@
         '<div class="journey-modal__meta"></div>' +
         '<div class="journey-modal__body"></div>' +
         '<div class="journey-modal__nav">' +
-          '<button type="button" data-step="-1"><i class="fa fa-arrow-left" aria-hidden="true"></i> Previous</button>' +
-          '<button type="button" data-step="1">Next <i class="fa fa-arrow-right" aria-hidden="true"></i></button>' +
+          '<button type="button" data-step="-1"><i class="fa fa-arrow-left" aria-hidden="true"></i> ' + labels.newer + '</button>' +
+          '<button type="button" data-step="1">' + labels.older + ' <i class="fa fa-arrow-right" aria-hidden="true"></i></button>' +
         '</div>' +
       '</div>';
     document.body.appendChild(modal);
 
     var current = null;
-    var timers = [];
-    var state = 'idle';
-    var flights = [];
-    var lastWidth = 0;
-
-    function later(fn, ms) { timers.push(setTimeout(fn, ms)); }
-
-    function render() {
-      var W = board.clientWidth;
-      lastWidth = W;
-      var cols = W >= 760 ? 4 : W >= 520 ? 3 : 2;
-      var padX = 12;
-      var colW = (W - padX * 2) / cols;
-      var R = 30;
-      var rowH = 196;
-      var head = 100;
-      var flightH = 180;
-      var y = 0;
-
-      board.innerHTML = '';
-      var regions = [];
-      groups.forEach(function (group, gi) {
-        if (gi > 0) y += flightH;
-        var rows = Math.ceil(group.stops.length / cols);
-        group.top = y;
-        group.stops.forEach(function (stop, i) {
-          var r = Math.floor(i / cols);
-          var c = i % cols;
-          if (r % 2 === 1) c = cols - 1 - c;
-          stop.x = padX + colW * (c + 0.5);
-          stop.y = y + head + R + r * rowH;
-        });
-        group.height = head + rows * rowH;
-        y += group.height;
-        regions.push(group);
-      });
-      board.style.height = y + 'px';
-
-      regions.forEach(function (group, gi) {
-        var region = document.createElement('div');
-        region.className = 'journey__region journey__region--' + (gi % 2 ? 'b' : 'a');
-        region.style.top = group.top + 'px';
-        region.style.height = group.height + 'px';
-        region.innerHTML = '<span class="journey__region-label"><i class="fa fa-map-marker" aria-hidden="true"></i>' +
-          group.country + (group.city && group.city !== group.country ? ' · ' + group.city : '') + '</span>';
-        board.appendChild(region);
-      });
-
-      stops.filter(function (stop) { return stop.kind === 'education'; }).forEach(function (edu) {
-        var members = [edu].concat(stops.filter(function (stop) { return stop.during === edu; }));
-        if (members.length < 2) return;
-        var rows = {};
-        members.forEach(function (stop) { (rows[stop.y] = rows[stop.y] || []).push(stop); });
-        Object.keys(rows).forEach(function (rowY, k) {
-          var xs = rows[rowY].map(function (stop) { return stop.x; });
-          var zone = document.createElement('div');
-          zone.className = 'journey__zone';
-          zone.style.left = (Math.min.apply(null, xs) - colW * 0.47) + 'px';
-          zone.style.width = (Math.max.apply(null, xs) - Math.min.apply(null, xs) + colW * 0.94) + 'px';
-          zone.style.top = (Number(rowY) - R - 44) + 'px';
-          zone.style.height = (R * 2 + 172) + 'px';
-          if (k === 0) {
-            zone.innerHTML = '<span class="journey__zone-label"><i class="fa fa-graduation-cap" aria-hidden="true"></i> ' +
-              'Working student · during the ' + edu.title.split(' ')[0] + "'s</span>";
-          }
-          board.appendChild(zone);
-        });
-      });
-
-      var svgNS = 'http://www.w3.org/2000/svg';
-      var svg = document.createElementNS(svgNS, 'svg');
-      svg.setAttribute('class', 'journey__svg');
-      svg.setAttribute('width', W);
-      svg.setAttribute('height', y);
-      board.appendChild(svg);
-
-      function addPath(d, cls) {
-        var path = document.createElementNS(svgNS, 'path');
-        path.setAttribute('d', d);
-        path.setAttribute('class', cls);
-        svg.appendChild(path);
-        return path;
-      }
-
-      groups.forEach(function (group) {
-        group.paths = [];
-        var pts = group.stops;
-        var d = 'M' + pts[0].x + ' ' + pts[0].y;
-        for (var i = 1; i < pts.length; i++) {
-          var a = pts[i - 1];
-          var b = pts[i];
-          if (Math.abs(a.y - b.y) < 1) {
-            d += ' L' + b.x + ' ' + b.y;
-          } else {
-            var bulge = (a.x > W / 2 ? 1 : -1) * Math.min(colW * 0.45, 80);
-            d += ' C' + (a.x + bulge) + ' ' + a.y + ' ' + (b.x + bulge) + ' ' + b.y + ' ' + b.x + ' ' + b.y;
-          }
-        }
-        ['journey__road-edge', 'journey__road', 'journey__road-line'].forEach(function (cls) {
-          var path = addPath(d, cls);
-          path.style.setProperty('--len', Math.ceil(path.getTotalLength()));
-          group.paths.push(path);
-        });
-      });
-
-      flights = [];
-      for (var gi = 1; gi < groups.length; gi++) {
-        var from = groups[gi - 1].stops[groups[gi - 1].stops.length - 1];
-        var to = groups[gi].stops[0];
-        var midY = groups[gi].top - flightH / 2;
-        var mx = W / 2;
-        var out = from.x + colW < W ? 1 : -1;
-        var dir = to.x < mx ? -1 : 1;
-        var d = 'M' + from.x + ' ' + from.y +
-          ' C' + (from.x + out * colW * 0.8) + ' ' + from.y + ' ' + (mx - dir * W * 0.22) + ' ' + midY + ' ' + mx + ' ' + midY +
-          ' C' + (mx + dir * W * 0.22) + ' ' + midY + ' ' + to.x + ' ' + (to.y - 110) + ' ' + to.x + ' ' + to.y;
-        addPath(d, 'journey__flight-path');
-
-        [0.16, 0.78, 0.32].forEach(function (fx, k) {
-          var cloud = document.createElement('i');
-          cloud.className = 'fa fa-cloud journey__cloud';
-          cloud.setAttribute('aria-hidden', 'true');
-          cloud.style.left = (W * fx) + 'px';
-          cloud.style.top = (groups[gi].top - flightH + 24 + k * 40) + 'px';
-          cloud.style.animationDelay = (-k * 4) + 's';
-          board.appendChild(cloud);
-        });
-
-        var label = document.createElement('div');
-        label.className = 'journey__flight-label';
-        label.style.top = (midY + 22) + 'px';
-        label.innerHTML = '<i class="fa fa-plane" aria-hidden="true"></i> ' + from.place.split(',')[0] + ' → ' + to.place.split(',')[0] +
-          (to.from ? ' · ' + to.from : '');
-        board.appendChild(label);
-
-        var plane = document.createElement('div');
-        plane.className = 'journey__plane';
-        plane.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" transform="rotate(90 12 12)" d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg>';
-        plane.style.offsetPath = "path('" + d + "')";
-        board.appendChild(plane);
-        flights.push(plane);
-      }
-
-      stops.forEach(function (stop, i) {
-        var button = document.createElement('button');
-        button.type = 'button';
-        button.className = 'journey__spot journey__spot--' + stop.kind;
-        button.style.left = (stop.x - colW / 2) + 'px';
-        button.style.top = (stop.y - R) + 'px';
-        button.style.width = colW + 'px';
-        button.style.setProperty('--i', groups[stop.group].stops.indexOf(stop));
-        button.setAttribute('aria-label', stop.title + (stop.org ? ' at ' + stop.org : '') + ', ' + stop.from + ' to ' + stop.to);
-        var flag = i === 0 ? '<span class="journey__flag">Start</span>' :
-          /present/i.test(stop.to) ? '<span class="journey__flag journey__flag--now">Now</span>' : '';
-        button.innerHTML =
-          '<span class="journey__disc' + (stop.logo ? ' has-logo' : '') + '">' + flag +
-            (stop.logo ?
-              '<img class="journey__logo' + (stop.logo.fit === 'cover' ? ' journey__logo--cover' : '') + '" src="' +
-                (config.base || '') + '/images/orgs/' + stop.logo.file + '" alt="' + stop.org + ' logo">' +
-              '<span class="journey__badge"><i class="fa ' + KIND[stop.kind].icon + '" aria-hidden="true"></i></span>' :
-              '<i class="fa ' + KIND[stop.kind].icon + '" aria-hidden="true"></i>') +
-          '</span>' +
-          '<span class="journey__label">' +
-            '<span class="journey__years">' + yearRange(stop) + '</span>' +
-            '<span class="journey__name">' + stop.title + '</span>' +
-            (stop.org ? '<span class="journey__org">' + stop.org + '</span>' : '') +
-            (stop.kind === 'student' ? '<span class="journey__tag">Part-time</span>' : '') +
-          '</span>';
-        button.addEventListener('click', function () { open(stop); });
-        board.appendChild(button);
-        stop.button = button;
-      });
-    }
-
-    function yearRange(stop) {
-      var a = (stop.from.match(/\d{4}/) || [stop.from])[0];
-      var b = /present/i.test(stop.to) ? 'Present' : (stop.to.match(/\d{4}/) || [stop.to])[0];
-      return a === b ? a : a + ' – ' + b;
-    }
-
-    function arrive(stop) {
-      stop.button.classList.add('is-visited');
-    }
-
-    function reveal(group) {
-      group.paths.forEach(function (path) { path.classList.add('is-drawn'); });
-      group.stops.forEach(function (stop) { stop.button.classList.add('is-shown'); });
-    }
-
-    function finish() {
-      state = 'done';
-      board.classList.add('is-done');
-      stops.forEach(arrive);
-      stops[stops.length - 1].button.classList.add('is-current');
-      flights.forEach(function (plane) {
-        plane.classList.remove('is-flying');
-        plane.classList.add('is-looping');
-      });
-    }
-
-    function play() {
-      timers.forEach(clearTimeout);
-      timers = [];
-      render();
-      if (reduceMotion) return finish();
-
-      state = 'playing';
-      board.classList.remove('is-done');
-      reveal(groups[0]);
-
-      var t = 900 + groups[0].stops.length * 90;
-      stops.forEach(function (stop, i) {
-        var prev = stops[i - 1];
-        if (prev && prev.group !== stop.group) {
-          later(function () {
-            flights[stop.group - 1].classList.add('is-flying');
-            reveal(groups[stop.group]);
-          }, t);
-          t += FLIGHT_MS;
-        }
-        later(function () { arrive(stop); }, t);
-        t += STEP_MS;
-      });
-      later(finish, t);
-    }
 
     function open(stop) {
       current = stop;
       var meta = modal.querySelector('.journey-modal__meta');
       meta.innerHTML =
-        '<span class="journey-modal__kind"><i class="fa ' + KIND[stop.kind].icon + '" aria-hidden="true"></i> ' + KIND[stop.kind].label + '</span>' +
-        (stop.during ? '<span class="journey-modal__kind">Part-time during the ' + stop.during.title.split(' ')[0] + "'s</span>" : '') +
+        '<span class="journey-modal__kind"><i class="fa ' + ICONS[stop.kind] + '" aria-hidden="true"></i> ' + stop.label + '</span>' +
+        (stop.during ? '<span class="journey-modal__kind">' + labels.during.replace('%degree%', degree(stop.during)) + '</span>' : '') +
         '<span class="journey-modal__when"><i class="fa fa-calendar" aria-hidden="true"></i> ' + stop.from + ' – ' + stop.to +
           (stop.duration ? ' · ' + stop.duration : '') + '</span>';
       var body = modal.querySelector('.journey-modal__body');
@@ -462,16 +269,15 @@
       });
       modal.querySelector('.journey-modal__card').className = 'journey-modal__card journey-modal__card--' + stop.kind;
       modal.querySelector('[data-step="-1"]').disabled = stop.index === 0;
-      modal.querySelector('[data-step="1"]').disabled = stop.index === stops.length - 1;
+      modal.querySelector('[data-step="1"]').disabled = stop.index === order.length - 1;
       if (!modal.open) modal.showModal();
       modal.querySelector('.journey-modal__card').scrollTop = 0;
     }
 
     function step(delta) {
       if (!current) return;
-      var next = stops[current.index + delta];
-      if (!next) return;
-      open(next);
+      var next = order[current.index + delta];
+      if (next) open(next);
     }
 
     modal.addEventListener('click', function (event) {
@@ -483,35 +289,6 @@
     modal.addEventListener('keydown', function (event) {
       if (event.key === 'ArrowRight') step(1);
       if (event.key === 'ArrowLeft') step(-1);
-    });
-
-    section.querySelector('.journey__replay').addEventListener('click', play);
-
-    render();
-
-    if ('IntersectionObserver' in window && !reduceMotion) {
-      var observer = new IntersectionObserver(function (entries) {
-        if (entries[0].isIntersecting) {
-          observer.disconnect();
-          play();
-        }
-      }, { threshold: 0.25 });
-      observer.observe(board);
-    } else {
-      finish();
-    }
-
-    var resizeTimer;
-    window.addEventListener('resize', function () {
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(function () {
-        if (board.clientWidth === lastWidth) return;
-        if (state === 'playing') return play();
-        timers.forEach(clearTimeout);
-        timers = [];
-        render();
-        if (state === 'done') finish();
-      }, 150);
     });
   }
 })();

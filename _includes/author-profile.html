@@ -43,12 +43,17 @@
   <div class="author__urls-wrapper">
     <button class="btn btn--inverse">Follow</button>
     <ul class="author__urls social-icons">
+      {% for edu in site.data.cv.education %}
+        <li class="author__meta"><i class="fa fa-fw fa-graduation-cap" aria-hidden="true"></i> {{ edu.short }}, {{ edu.org }}</li>
+      {% endfor %}
+      {% comment %} Education comes from _data/cv.yml above; author.location / author.employer are no longer shown.
       {% if author.location %}
         <li class="author__meta"><i class="fa fa-fw fa-graduation-cap" aria-hidden="true"></i> {{ author.location }}</li>
       {% endif %}
       {% if author.employer %}
         <li class="author__meta"><i class="fa fa-fw fa-graduation-cap" aria-hidden="true"></i> {{ author.employer }}</li>
       {% endif %}
+      {% endcomment %}
       {% if author.uri %}
         <li><a href="{{ author.uri }}"><i class="fa fa-fw fa-chain" aria-hidden="true"></i> {{ site.data.ui-text[site.locale].website_label | default: "Website" }}</a></li>
       {% endif %}
@@ -72,9 +77,6 @@
       {% endif %}
       {% if author.xing %}
         <li><a href="https://www.xing.com/profile/{{ author.xing }}"><i class="fa fa-fw fa-xing-square" aria-hidden="true"></i> XING</a></li>
-      {% endif %}
-      {% if author.instagram %}
-        <li><a href="https://instagram.com/{{ author.instagram }}"><i class="fa fa-fw fa-instagram" aria-hidden="true"></i> Instagram</a></li>
       {% endif %}
       {% if author.tumblr %}
         <li><a href="https://{{ author.tumblr }}.tumblr.com"><i class="fa fa-fw fa-tumblr-square" aria-hidden="true"></i> Tumblr</a></li>
@@ -132,6 +134,9 @@
       {% endif %}
       {% if author.kaggle %}
         <li><a href="{{ author.kaggle }}"><i class="fa fa-fw fa-trophy" aria-hidden="true"></i> Kaggle</a></li>
+      {% endif %}
+      {% if author.instagram %}
+        <li><a href="https://instagram.com/{{ author.instagram }}"><i class="fa fa-fw fa-instagram" aria-hidden="true"></i> Instagram</a></li>
       {% endif %}
     </ul>
   </div>
