@@ -39,8 +39,6 @@
     - { name: "Streamlit", logo: "streamlit" }
     - { name: "gRPC", icon: "fa-exchange" }
     - { name: "Spring", logo: "spring" }
-    - { name: "Hibernate", logo: "hibernate" }
-
 - category: "Databases & Search"
   items:
     - { name: "MongoDB", logo: "mongodb" }
@@ -63,8 +61,6 @@
     - { name: "Docker", logo: "docker" }
     - { name: "Jenkins", logo: "jenkins" }
     - { name: "SonarQube", logo: "sonarqube" }
-    - { name: "pre-commit", logo: "precommit" }
-
 - category: "Monitoring"
   items:
     - { name: "Prometheus", logo: "prometheus" }
